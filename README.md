@@ -24,8 +24,7 @@ All the scripts in the game have been reorganized to more comfortably fit how Go
 
 Space Game NX uses a Bitmap font to get around the lack of an OSScreen font in SDL. In this version, the text is saved in a universally used UI theme, so that all labels automatically use it. The NX bitmap font can be toggled with the code `11111` on the Password screen.
 
-Most of the bitmap compression/rendering/matrix logic has been replaced by node recreations of the player ship, enemies, etc, which all use native Godot functions for rotation, movement, and of course, sprite displaying. 
-This makes the code not very useful as a reference for Godot, although seeing how some pixel-effects (like the explosions) occur, or using a TextureRect to draw pixel sprites could be helpful.
+Most of the bitmap compression/rendering/matrix logic has been replaced by node recreations of the player ship, enemies, etc, which all use native Godot functions for rotation, movement, and of course, sprite displaying.
 
 Due to it using the same prng method, all old passwords should work from previous versions of Space Game!
 
@@ -33,7 +32,7 @@ Due to it using the same prng method, all old passwords should work from previou
 
 The big change is that now Space Game runs at 60fps when it can, and when it can't it maintains the same speed of objects in game.  Godot will try to maintain 60fps, but may bump down to 30fps if 60 is too demanding. This difference means that regardless of the fps, the gameplay should "feel" the same speed (which is important, as later levels will make the enemies faster). In the previous homebrew versions the game would render each frame as fast as it could, which turned out to come in lower than 60fps or allow inconsistent slowing down depending on what was occurring on screen.
 
-Game saving has been added! When the player does something, like enter a (successful) password or complete a level, a save file is created, and an options selection will appear on the title screen. This will house options to toggle various gameplay things as well as any cheat/easter egg codes the player has entered. 
+Game saving has been added! When the player does something, like enter a (successful) password or complete a level, a save file is created, and an options selection will appear on the title screen. This will house options to toggle various gameplay things as well as any cheat/easter egg codes (at least, that change aspects of the game) the player has entered. 
 
 The code `22222` is also added to toggle the music playing within the code, and some other passwords also had their functionality change. For example, the code `24177` now enables a new double firing function from the ship, whereas before it would transform the player's sprite. Some passwords also now also open URLs as easter eggs. Like in the original, certain cheats will disable the score counter. The code `77777` to swap the red and blue channels from the NX port is also present!
 
