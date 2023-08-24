@@ -40,11 +40,15 @@ The code `22222` is also added to toggle the music playing within the code, and 
 
 
 ### A final note
-This is technically the fourth port of Space Game! The porting history is as follows:
+This is technically the fifth port of Space Game! The porting history is as follows:
 
-[Wii U Space Game (2016)](https://github.com/vgmoose/wiiu-space) -> [JSpaceGame (2017)](https://github.com/vgmoose/JSpaceGame/) -> [Space Game NX (2018)](https://github.com/vgmoose/space-nx) -> [Space Game (2021)](https://github.com/vgmoose/space-game) (You are here).
-
-To hear more about the Java port, I wrote a [blog post](https://gbatemp.net/blog/vgmoose.382062/) about it in 2017, and you can compare [Space.java](https://github.com/vgmoose/JSpaceGame/blob/master/src/Space.java) against the .gd and .c files :smiley:
+[Wii U Space Game (2016)](https://github.com/vgmoose/wiiu-space)
+[JSpaceGame (2017)](https://github.com/vgmoose/JSpaceGame/)
+[Space Game NX (2018)](https://github.com/vgmoose/space-nx)
+[Space Game (2021)](https://github.com/vgmoose/space-game) 
+[Space Game Rewritten]
+(https://github.com/c08oprkiua/space-game-rewrite)
+(You are here).
 
 Space Game NX (an SDL program) was intended to be the "final form" of this small game, but using a game engine like Godot allows for better control over the FPS issue as mentioned earlier, but also personally gives me greater confidence in the codebase being more accessible in the future in a way that SDL fell a little short. Trying to explain to others how to play Space Game always forces me to start off with a "Well..." as I picture the homebrewing paths, Java path, or trying to get SDL working with their setup (aka Controllers, framerate, OS concerns, etc). Now it can be easily brought to computers, phones, consoles, or other Godot projects!
 
