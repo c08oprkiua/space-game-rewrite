@@ -32,7 +32,7 @@ The big change is that now Space Game runs at 60fps when it can, and when it can
 
 Game saving has been added! When the player does something, like enter a password or complete a level, a save file is created, and an options selection will appear on the title screen. This will house options to toggle various gameplay things as well as any cheat/easter egg codes (at least, that change aspects of the game) the player has entered. Furthermore, the player's progress will be saved, and can be optionally resumed from when starting subsequent sessions. 
 
-The Password screen now acts like a subscreen of the title screen (because it is) instead of it's own isolated area.
+The Password screen now acts like a subscreen of the title screen (because it is) instead of its own isolated area.
 
 The code `22222` is also added to toggle the music playing within the code, and some other passwords also had their functionality change. For example, the code `24177` now enables a new double firing function from the ship, whereas before it would transform the player's sprite. Some passwords also now also open URLs as easter eggs. Like in the original, certain cheats will disable the score counter. The code `77777` to swap the red and blue channels from the NX port is also present!
 
