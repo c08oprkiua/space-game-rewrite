@@ -1,11 +1,8 @@
 ## Space Game
-This is a Godot port of the Wii U homebrew app [Space Game](https://github.com/vgmoose/wiiu-space) (and [Space Game NX](https://github.com/vgmoose/space-nx)). The goal of this port is to more easily bring it to other devices, as running homebrew can be a complicated process.
+This is a redone version of the Godot port of the Wii U homebrew app [Space Game](https://github.com/vgmoose/wiiu-space) (and [Space Game NX](https://github.com/vgmoose/space-nx)). The goal of this fork is to more natively integrate the game into the Godot game engine, by using Godot's features in place of the features the original C game had to provide.
 
 ### Downloads
-Linux, Mac, and Windows builds are available [here](https://github.com/vgmoose/space-game/actions). A video of the gameplay is [here](https://www.youtube.com/watch?v=KMuicPmOIHw). It is also playable on the web [here](https://vgmoose.com/space-game/)!
-
-<img width="410" alt="Screen Shot 2021-08-18 at 10 29 57 PM" src="https://user-images.githubusercontent.com/2467473/130005538-674e0de2-c7ad-4568-b638-1be8c8e4f2f2.png"> <img width="410" alt="Screen Shot 2021-08-18 at 10 31 29 PM" src="https://user-images.githubusercontent.com/2467473/130005559-661d7db4-5808-46bb-adbe-9f3783e4c9e4.png">
-
+Linux, Mac, and Windows builds will be available upon first release.
 
 ### Credits and License
 This program is licensed under [the MIT license](https://opensource.org/licenses/MIT), which grants anyone permission to do pretty much whatever they want as long as the copyright notice stays intact.*
