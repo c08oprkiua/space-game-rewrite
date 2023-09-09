@@ -1,0 +1,109 @@
+[gd_scene load_steps=5 format=3 uid="uid://cf6iwyfkkmmap"]
+
+[ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://uitheming.tres" id="1_1h6uu"]
+[ext_resource type="Script" path="res://ReWritten/titlescreen.gd" id="2_5lwpv"]
+[ext_resource type="Texture2D" uid="uid://bqe108dt1oarl" path="res://Assets/spacegame.png" id="3_46dme"]
+[ext_resource type="Script" path="res://ReWritten/passwordmanager.gd" id="4_pwwnn"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_1h6uu")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_1h6uu")
+
+[node name="MainMenu" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_5lwpv")
+
+[node name="SpaceGame" type="TextureButton" parent="CenterContainer/MainMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+action_mode = 0
+texture_normal = ExtResource("3_46dme")
+
+[node name="Credits" type="Label" parent="CenterContainer/MainMenu"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "by vgmoose"
+horizontal_alignment = 2
+
+[node name="StartGame" type="Button" parent="CenterContainer/MainMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+action_mode = 0
+text = "Start Game"
+
+[node name="Options" type="Button" parent="CenterContainer/MainMenu"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+action_mode = 0
+text = "Options"
+
+[node name="Password" type="Button" parent="CenterContainer/MainMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+text = "Password"
+
+[node name="PassEnt" type="LineEdit" parent="CenterContainer/MainMenu"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+placeholder_text = "00000"
+alignment = 1
+max_length = 5
+expand_to_text_length = true
+virtual_keyboard_type = 2
+script = ExtResource("4_pwwnn")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="MusicCredits" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "~*cruise*~ by (T-T)b"
+
+[node name="License" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "MIT License"
+
+[connection signal="pressed" from="CenterContainer/MainMenu/SpaceGame" to="CenterContainer/MainMenu" method="_on_space_game_pressed"]
+[connection signal="focus_entered" from="CenterContainer/MainMenu/StartGame" to="CenterContainer/MainMenu" method="_on_start_game_focus_entered"]
+[connection signal="pressed" from="CenterContainer/MainMenu/StartGame" to="CenterContainer/MainMenu" method="_on_start_game_pressed"]
+[connection signal="focus_entered" from="CenterContainer/MainMenu/Options" to="CenterContainer/MainMenu" method="_on_options_focus_entered"]
+[connection signal="pressed" from="CenterContainer/MainMenu/Options" to="CenterContainer/MainMenu" method="_on_options_pressed"]
+[connection signal="focus_entered" from="CenterContainer/MainMenu/Password" to="CenterContainer/MainMenu" method="_on_password_focus_entered"]
+[connection signal="toggled" from="CenterContainer/MainMenu/Password" to="CenterContainer/MainMenu" method="_on_password_toggled"]
+[connection signal="text_submitted" from="CenterContainer/MainMenu/PassEnt" to="CenterContainer/MainMenu/PassEnt" method="tryPassword"]

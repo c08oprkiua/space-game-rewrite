@@ -1,0 +1,130 @@
+[gd_scene load_steps=10 format=3 uid="uid://cs7oosh7bxp6w"]
+
+[ext_resource type="Script" path="res://ReWritten/BaseR.gd" id="1_eiii8"]
+[ext_resource type="Texture2D" uid="uid://tqpf5dundxob" path="res://Assets/gamepad.png" id="1_r2e3h"]
+[ext_resource type="PackedScene" uid="uid://cf6iwyfkkmmap" path="res://Scenes/titlescreen.tscn" id="2_c6p06"]
+[ext_resource type="Texture2D" uid="uid://nqbsalqglq0h" path="res://Assets/tablet.png" id="3_hhrrm"]
+[ext_resource type="PackedScene" uid="uid://r64nvcr8px2x" path="res://Scenes/MainGameplay.tscn" id="4_gunar"]
+[ext_resource type="PackedScene" uid="uid://wamq8rokwxtv" path="res://Scenes/Stars.tscn" id="5_87lrl"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xy852"]
+viewport_path = NodePath("Gameview")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_wdtx7"]
+viewport_path = NodePath("Gameview")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_is3bx"]
+viewport_path = NodePath("Gameview")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_eiii8")
+
+[node name="WiiUGamepad" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_r2e3h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Gameview" type="TextureRect" parent="WiiUGamepad"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 261.0
+offset_top = 148.0
+offset_right = -267.0
+offset_bottom = -147.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_xy852")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SwitchTablet" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_hhrrm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Gameview" type="TextureRect" parent="SwitchTablet"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -324.0
+offset_top = -251.0
+offset_right = 335.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_wdtx7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="SwitchTablet"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FullScreen" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("ViewportTexture_is3bx")
+stretch_mode = 4
+
+[node name="Gameview" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 3
+size = Vector2i(427, 240)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="TitleScreen" parent="Gameview" instance=ExtResource("2_c6p06")]
+
+[node name="MainGameplay" parent="Gameview" instance=ExtResource("4_gunar")]
+visible = false
+
+[node name="Stars" parent="Gameview" instance=ExtResource("5_87lrl")]
+visible = false
+
+[node name="Button" type="Button" parent="Gameview"]
+visible = false
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Test"

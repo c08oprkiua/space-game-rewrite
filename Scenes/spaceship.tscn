@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://brinaxqcvgqky"]
+
+[ext_resource type="Script" path="res://ReWritten/spaceship.gd" id="1_2jl4r"]
+[ext_resource type="Shape2D" uid="uid://bpowfhstr37vq" path="res://Scenes/spaceshiphitbox.tres" id="2_8mddu"]
+[ext_resource type="Resource" uid="uid://b5ctfjgh8aouv" path="res://ReWritten/defaultplayerres.tres" id="2_kupm4"]
+[ext_resource type="Texture2D" uid="uid://dwxgawidjvw3i" path="res://Assets/Blueship.png" id="4_whgs1"]
+
+[node name="Spaceship" type="CharacterBody2D"]
+process_mode = 1
+disable_mode = 2
+motion_mode = 1
+script = ExtResource("1_2jl4r")
+settings = ExtResource("2_kupm4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+process_mode = 1
+rotation = 1.5708
+shape = ExtResource("2_8mddu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("4_whgs1")
+
+[node name="Area2D" type="Area2D" parent="."]
+rotation = 1.5708
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+process_mode = 1
+shape = ExtResource("2_8mddu")
