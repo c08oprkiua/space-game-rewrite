@@ -1,5 +1,5 @@
 extends Node2D
-class_name Draw
+class_name SGDraw
 
 var font
 
@@ -11,22 +11,6 @@ func flipBuffers(g):
 #	g.screenTexture.update(g.editableScreen)
 	pass
 
-# This is the main function that does the grunt work of drawing to both screens. It takes in the
-# Services structure that is constructed in program.c, which contains the pointer to the function
-# that is responsible for putting a pixel on the screen. By doing it this way, the OSScreenPutPixelEx function pointer is only
-# looked up once, at the program initialization, which makes successive calls to this pixel caller quicker.
-func putAPixel(gr, x, y, r, g, b):
-
-	if (gr.flipColor):
-		var temp = r;
-		r = b;
-		b = temp;
-
-	if x < 0 or x >= 427 or y < 0 or y >= 240 or gr.editableScreen == null:
-		return
-	
-	gr.editableScreen.set_pixel(x, y, Color(r/255.0, g/255.0, b/255.0))
-
 func drawString(g, xi, yi, string):
 	if not g.nxFont:
 		# the bitmap font is only used with the nxFont enabled
@@ -36,14 +20,11 @@ func drawString(g, xi, yi, string):
 		return
 	# for every character in the string, if it's within range, render it at the current position
 	# and move over 8 characters
-
 	xi *= 6.25;
 	yi *= 13;
-	
 	if yi == 0:
 		# a little bump for the top row never hurt anyone
 		yi = 5
-
 	var i = 0;
 	for nexts in string:
 		i += 1
@@ -68,7 +49,6 @@ func fillRect(gr, ox, oy, width, height, r, g, b):
 		for ry in range(height):
 			var x = ox + rx;
 			var y = oy + ry;
-
 			# do actual pixel drawing logic
 			putAPixel(gr, x, y, r, g, b);
 
@@ -84,32 +64,26 @@ func drawBitmap(gr, ox, oy, width, height, input, palette):
 			var r = color[2];
 			var g = color[1];
 			var b = color[0];
-
 			# transparent pixels
 			if (r == 0x27 && g == 0x27 && b == 0x27):
 				continue;
-
 			var x = ox + rx;
 			var y = oy + ry;
-
 			# do actual pixel drawing logic
 			putAPixel(gr, x, y, r, g, b);
 
 # This is primarly used for drawing the stars, and takes in a pixel map. It is similar to bitmap, but now
 # it takes the whole pixel map as well as which portion of it to actually draw. At the beginning, all of the stars
 # are drawn, but whenever the ship moves, only the stars underneath the ship need to be redrawn.
-func drawPixels(g, pixels):
-	for rx in range(200):
-		var x = pixels[rx].x;
-		var y = pixels[rx].y;
-
-		if g.spaceGlobals.state == 7 and y <= 20:
-			# if we're in game, and the star would've been in the upper region of the screen
-			# don't draw it. This is to simulate the black rectangle in the original game
-			# this space globals check is totally cheating btw!
-			continue
-
-		putAPixel(g, x, y, pixels[rx].r, pixels[rx].g, pixels[rx].b);
 
 func drawPixel(gr, x, y, r, g, b):
 	putAPixel(gr, x, y, r, g, b);
+
+func putAPixel(gr, x, y, r, g, b):
+	if (gr.flipColor):
+		var temp = r;
+		r = b;
+		b = temp;
+	if x < 0 or x >= 427 or y < 0 or y >= 240 or gr.editableScreen == null:
+		return
+	gr.editableScreen.set_pixel(x, y, Color(r/255.0, g/255.0, b/255.0))

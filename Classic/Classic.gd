@@ -1,37 +1,37 @@
 extends Node2D
 
-var player
+var player = get_parent().find_children("AudioStreamPlayer")
 
 var graphics = {};
 var a = 0;
 
-var screenImage
-var screenTexture
-var editableScreen
+var screenImage = get_parent().find_children("TextureRect")
+var screenTexture = Image.new()
+var editableScreen 
 
 var SCALER = 2
 var windowSize
-var gamepad
+var gamepad = get_parent().find_children("Gamepad")
 
 var initialized = false
 
-var labelController
+var labelController = get_parent().find_children("LabelController")
 
-var gamepadTexture
-var tabletTexture
+var gamepadTexture = gamepad.texture
+var tabletTexture =  load("res://Classic/tablet.png")
 
 var startedMusic = false
 
 func _ready():
-	player = find_node("AudioStreamPlayer")
-	screenImage = find_node("TextureRect")
-	gamepad = find_node("Gamepad")
-	labelController = find_node("LabelController")
+	player = get_parent().find_children("AudioStreamPlayer")
+	screenImage = get_parent().find_children("TextureRect")
+	gamepad = get_parent().find_children("Gamepad")
+	labelController = get_parent().find_children("LabelController")
 	gamepadTexture = gamepad.texture
 	tabletTexture =  load("res://Classic/tablet.png")
 
 #	get_tree().get_root().connect("size_changed", self.size_changed)
-	get_tree().get_root().connect("size_changed", self, "size_changed")
+	get_parent().connect("size_changed", size_changed)
 	
 	var imageTexture = ImageTexture.new()
 	var dynImage = Image.new()
@@ -39,7 +39,7 @@ func _ready():
 	dynImage.create(427, 240, false, Image.FORMAT_RGB8)
 	dynImage.fill(Color(0, 0, 0))
 
-	imageTexture.create_from_image(dynImage, 0)
+	imageTexture.create_from_image(dynImage)
 	screenImage.texture = imageTexture
 	
 	screenTexture = imageTexture
@@ -148,24 +148,20 @@ func size_changed():
 
 func program_start():
 	initialized = true
-	
 	# setup the password list
 	var pwSeed = 27;
 	var trigmath = PRandom.new(pwSeed)
 	for x in range(100):
 		var levelCode = int(trigmath.prand()*100000)
 		mySpaceGlobals.passwordList.append(levelCode)
-
 	#  set the starting time
 	randomize()
 	mySpaceGlobals["seed"] = randi()
 #	print("Set the time!\n");
-
 	var pad_data = {}
-
 	#  decompress compressed things into their arrays, final argument is the transparent color in their palette
 	var images = Images.new()
-	var draw = Draw.new()
+	var draw #= Draw.new()
 	space = Space.new(mySpaceGlobals)
 #	print("Initialized space object")
 #
@@ -287,4 +283,3 @@ func _process(delta):
 	# To exit the game
 #		if (mySpaceGlobals.button & PAD_BUTTON_MINUS):
 #			break;
-

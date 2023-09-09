@@ -10,7 +10,6 @@ extends Control
 # there would be placement concerns that may need to
 # be accounted for (and you'd need stuff like, align left, right, center, etc)
 
-
 var allLabels
 var posCache
 
@@ -22,10 +21,8 @@ var FONT_SIZE = 12
 func _ready():
 	allLabels = {}
 	posCache = {}
-	
-	osScreenFont = DynamicFont.new()
-	osScreenFont.font_data = load("res://Classic/mplus-2m-medium.ttf")
-
+	osScreenFont = FontFile.new()
+	osScreenFont.load_dynamic_font("res://Classic/mplus-2m-medium.ttf")
 	osScreenFont.size = FONT_SIZE * multiplier
 	osScreenFont.font_data.antialiased = true
 #	osScreenFont.font_data.hinting = DynamicFontData.HINTING_LIGHT
@@ -85,6 +82,3 @@ func drawString(id, text, x, y):
 #	text = text.replace("MIT", " MIT")
 	label.text = text
 	label.visible = true
-
-#func _process(delta):
-#	pass

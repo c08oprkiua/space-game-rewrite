@@ -40,7 +40,7 @@ var ship2_palette = images.ship2_palette
 #var compressed_boss2 = images.compressed_boss2
 #var boss2_palette = images.boss2_palette
 
-var draw
+var draw1
 var trigmath
 
 var BULLET_COUNT = 20
@@ -69,7 +69,7 @@ func initBullets(mySpaceGlobals):
 		mySpaceGlobals.bullets.append(bullet)
 
 func _init(mySpaceGlobals):
-	draw = Draw.new()
+	draw1 = Draw.new()
 	trigmath = PRandom.new(mySpaceGlobals.seed)
 	mySpaceGlobals["invalid"]= 1
 	
@@ -126,7 +126,7 @@ func _init(mySpaceGlobals):
 
 func blackout(g):
 	g.labelController.makeAllInvisible()
-	draw.fillScreen(g, 0,0,0,1)
+	draw1.fillScreen(g, 0,0,0,1)
 
 func increaseScore(mySpaceGlobals, inc):
 
@@ -792,48 +792,35 @@ func addNewEnemies(mySpaceGlobals):
 
 #	# randomly decide to set starting angle right for the player
 #	var seekPlayer = trigmath.prand(mySpaceGlobals.seed)*2;
-
 	var difficulty = mySpaceGlobals.level/100.0;
-
 	var randVal = trigmath.prand();
-
 	# set the enemy count (max enemies on screen at once) based on level
 	var enemyCount = 10 + difficulty*90*randVal;
-
 	if (enemyCount > 100): enemyCount = 100;
-
 	# set speed randomly within difficulty range
 	var speed = 3 + (difficulty)*12*randVal;
-
 	var startx
 	var starty
-
 	var theta = trigmath.prand()*PI;
 	randVal = trigmath.prand();
-
 	# horiz size
 	if (side < 2):
 		startx = 0 if (side == 0) else xMaxBoundry;
 		starty = randVal*yMaxBoundry;
-
 		if (startx != 0):
 			theta -= PI;
 	else:
 		starty = 20 if (side == 2) else yMaxBoundry;
 		startx = randVal*xMaxBoundry;
-
 		if (starty == 20):
 			theta -= PI / 2.0;
 		else:
 			theta += PI / 2.0;
-
 	# seek directly to the player
 	if (mySpaceGlobals.enemiesSeekPlayer == 1):
 		var xdif = startx + 11 - (mySpaceGlobals.p1X + 18);
 		var ydif = starty + 11 - (mySpaceGlobals.p1Y + 18);
-
 		theta = atan2(xdif, ydif) - PI;
-
 	for xx in range(enemyCount):
 		if (mySpaceGlobals.enemies[xx].position.active == 0):
 			mySpaceGlobals.enemies[xx].position.x = startx;
@@ -844,7 +831,6 @@ func addNewEnemies(mySpaceGlobals):
 			break;
 
 func totallyRefreshState(mySpaceGlobals):
-
 	initGameState(mySpaceGlobals);
 	mySpaceGlobals["displayHowToPlay"] = 0;
 	mySpaceGlobals["firstShotFired"] = 0;
@@ -860,26 +846,19 @@ func displayGameOver(mySpaceGlobals):
 	
 	if (mySpaceGlobals.invalid == 1):
 		blackout(mySpaceGlobals.graphics);
-
 		var gameover = "Game Over!"
 		draw.drawString(mySpaceGlobals.graphics, 25, 5, gameover);
-
 		# only display score + pw if the player didn't use cheats
 		if (mySpaceGlobals.dontKeepTrackOfScore != 1):
 			var finalscore = "Score: %08d" % mySpaceGlobals.score
 			var passw = "Lv %d Password: %05d" % [mySpaceGlobals.level+1, mySpaceGlobals.passwordList[mySpaceGlobals.level]]
-
 			draw.drawString(mySpaceGlobals.graphics, 23, 7, finalscore);
 			draw.drawString(mySpaceGlobals.graphics, 21, 8, passw);
-
 		var resume = "Try Again"
 		var quit = "   Quit"
-
 		draw.drawString(mySpaceGlobals.graphics, 25, 13, resume);
 		draw.drawString(mySpaceGlobals.graphics, 25, 14, quit);
-
 		self.drawMenuCursor(mySpaceGlobals);
-
 		draw.flipBuffers(mySpaceGlobals.graphics);
 		mySpaceGlobals.invalid = 0;
 
@@ -1007,42 +986,31 @@ func tryPassword(mySpaceGlobals):
 	# some t-tb tracks
 	if mySpaceGlobals.passwordEntered == 00001:
 		OS.shell_open("https://t-tb.bandcamp.com/track/cruise")
-	
 	if mySpaceGlobals.passwordEntered == 00002:
 		OS.shell_open("https://t-tb.bandcamp.com/track/scream-pictures")
-	
 	if mySpaceGlobals.passwordEntered == 00003:
 		OS.shell_open("https://t-tb.bandcamp.com/track/slimers")
-	
 	if mySpaceGlobals.passwordEntered == 00004:
 		OS.shell_open("https://t-tb.bandcamp.com/track/frog-song")
-	
 	if mySpaceGlobals.passwordEntered == 00005:
 		OS.shell_open("https://www.youtube.com/watch?v=Tb02CNlhkPA")
-	
 	if mySpaceGlobals.passwordEntered == 00006:
 		OS.shell_open("https://www.youtube.com/watch?v=a6oWk-BJ8bI")
-	
 	if mySpaceGlobals.passwordEntered == 00007:
 		OS.shell_open("https://www.youtube.com/watch?v=wcMLFMsIVis")
 
 	# 100 passwords, one for each level
 	for x in range(100):
-	
 		if (mySpaceGlobals.passwordEntered == mySpaceGlobals.passwordList[x]):
 			mySpaceGlobals.level = x;
 			break;
-
 		if (x==99): # no password was right
 			return;
-
 	# switch to the game state
 	mySpaceGlobals.state = 7;
-
 	# They are generated
 
 func renderReset(mySpaceGlobals):
-
 	initGameState(mySpaceGlobals);
 	mySpaceGlobals.p1X = 200;
 	mySpaceGlobals.p1Y = 100;

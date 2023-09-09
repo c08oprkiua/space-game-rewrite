@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6ftjhur131bi"
-path="res://godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.ctex"
+uid="uid://dwxgawidjvw3i"
+path="res://godot/imported/Blueship.png-cd5bc1c571965c8caed7435bb13b73df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=["res://godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.ctex"]
+source_file="res://Assets/Blueship.png"
+dest_files=["res://godot/imported/Blueship.png-cd5bc1c571965c8caed7435bb13b73df.ctex"]
 
 [params]
 

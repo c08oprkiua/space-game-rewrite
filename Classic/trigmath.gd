@@ -1,4 +1,4 @@
-extends Node2D
+extends Resource
 class_name PRandom
 
 # This is from here: http://stackoverflow.com/a/1026370/1871287
@@ -8,12 +8,12 @@ var xseed
 func _init(initialSeed):
 	xseed = initialSeed
 
-func prand ():
-	var next = xseed;
-	var result;
-	next *= 1103515245;
-	next += 12345;
-	result =int(next / 65536) % 2048;
+func prand():
+	var next = xseed
+	var result
+	next *= 1103515245
+	next += 12345
+	result = int(next / 65536) % 2048
 	result = ~result
 
 	next *= 1103515245;

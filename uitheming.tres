@@ -1,0 +1,12 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b7kh7cuwrfj18"]
+
+[ext_resource type="FontFile" uid="uid://bq05dv50v006w" path="res://Assets/mplus-2m-medium.ttf" id="1_hp8au"]
+[ext_resource type="StyleBox" uid="uid://b38f1ypuawkiv" path="res://clearstyleboxflat.tres" id="2_rk2aq"]
+
+[resource]
+Button/font_sizes/font_size = 12
+Button/fonts/font = ExtResource("1_hp8au")
+Button/styles/normal = ExtResource("2_rk2aq")
+Label/font_sizes/font_size = 12
+Label/fonts/font = ExtResource("1_hp8au")
+LineEdit/font_sizes/font_size = 12
