@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 @onready var config = ConfigFile.new()
 @onready var gameview = $"Gameview"
@@ -47,7 +47,7 @@ func _input(event):
 # The most vareresting function is rotating the bitmap (makeRotationMatrix).
 #
 # Other things it handles:
-#	- Status bar draw.drawing (renderTexts)
+#	- Status bar drawd.drawing (renderTexts)
 #	- Decompressing sprites (decompress_bitmap)
 # It relies heavily on a SpaceGlobals struct defined in space.h. This is a carry over from the libwiiu
 # pong example, but also I believe neccesary since global variables don't seem to be able to be set(?)
@@ -70,7 +70,8 @@ var ship2_palette = images.ship2_palette
 #var compressed_boss2 = images.compressed_boss2
 #var boss2_palette = images.boss2_palette
 
-var draw
+#Renamed "draw" to "drawd" because Godot was complaining about it
+var drawd
 var trigmath
 
 # the original Space Game uses a few different speeds (bullet, player, enemies)
@@ -85,7 +86,7 @@ var FPS_MULT = 40
 
 
 func _init(mySpaceGlobals):
-#	draw = Draw.new()
+#	drawd = Draw.new()
 	trigmath = PRandom.new(mySpaceGlobals.seed)
 	mySpaceGlobals["invalid"]= 1
 	mySpaceGlobals["enemy"] = []
@@ -133,7 +134,7 @@ func _init(mySpaceGlobals):
 
 func blackout(g):
 	g.labelController.makeAllInvisible()
-	draw.fillScreen(g, 0,0,0,1)
+	drawd.fillScreen(g, 0,0,0,1)
 
 func makeRotationMatrix(angle, width, original, target, transIndex):
 	for x in range(width):
@@ -162,7 +163,7 @@ func makeRotationMatrix(angle, width, original, target, transIndex):
 #	# for all active enemies, advance them
 #	for x in range(MAX_ENEMIES): # up to 100 enemies at once
 #		if (mySpaceGlobals.enemies[x].position.active >= 1):
-#			draw.drawBitmap(mySpaceGlobals.graphics, mySpaceGlobals.enemies[x].position.x, mySpaceGlobals.enemies[x].position.y, 23, 23, mySpaceGlobals.enemies[x].rotated_sprite, enemy_palette);
+#			drawd.drawBitmap(mySpaceGlobals.graphics, mySpaceGlobals.enemies[x].position.x, mySpaceGlobals.enemies[x].position.y, 23, 23, mySpaceGlobals.enemies[x].rotated_sprite, enemy_palette);
 
 func render(mySpaceGlobals):
 	if (mySpaceGlobals.invalid == 1):
@@ -174,7 +175,7 @@ func render(mySpaceGlobals):
 #		renderEnemies(mySpaceGlobals);
 #		renderShip(mySpaceGlobals);
 #		renderTexts(mySpaceGlobals);
-		draw.flipBuffers(mySpaceGlobals.graphics);
+		drawd.flipBuffers(mySpaceGlobals.graphics);
 		mySpaceGlobals.invalid = 0;
 
 # see the notes in images.c for more info on how this works
@@ -213,15 +214,15 @@ func renderShip(mySpaceGlobals):
 	var posy = int(mySpaceGlobals.p1Y);
 	if (mySpaceGlobals.playerExplodeFrame < 2):
 		makeRotationMatrix(mySpaceGlobals.angle, 36, orig_ship, rotated_ship, mySpaceGlobals.transIndex);
-	draw.drawBitmap(mySpaceGlobals.graphics, posx, posy, 36, 36, rotated_ship, mySpaceGlobals.curPalette);
+	drawd.drawBitmap(mySpaceGlobals.graphics, posx, posy, 36, 36, rotated_ship, mySpaceGlobals.curPalette);
 
 func drawMenuCursor(mySpaceGlobals):
 	# cover up any old cursors (used to be needed before changing to draw.draw everything mode)
-	draw.fillRect(mySpaceGlobals.graphics, 138, 164, 16, 30, 0, 0, 0);
-	draw.fillRect(mySpaceGlobals.graphics, 250, 164, 16, 30, 0, 0, 0);
+	drawd.fillRect(mySpaceGlobals.graphics, 138, 164, 16, 30, 0, 0, 0);
+	drawd.fillRect(mySpaceGlobals.graphics, 250, 164, 16, 30, 0, 0, 0);
 	# display the cursor on the correct item
 	var cursor = "[[            ]]"
-	draw.drawString(mySpaceGlobals.graphics, 21, 13 + mySpaceGlobals.menuChoice, cursor);
+	drawd.drawString(mySpaceGlobals.graphics, 21, 13 + mySpaceGlobals.menuChoice, cursor);
 
 func displayPause(mySpaceGlobals):
 	if (mySpaceGlobals.invalid == 1):
@@ -229,10 +230,10 @@ func displayPause(mySpaceGlobals):
 		# display the password here
 		var resume = "Resume"
 		var quit = " Quit"
-		draw.drawString(mySpaceGlobals.graphics, 27, 13, resume);
-		draw.drawString(mySpaceGlobals.graphics, 27, 14, quit);
+		drawd.drawString(mySpaceGlobals.graphics, 27, 13, resume);
+		drawd.drawString(mySpaceGlobals.graphics, 27, 14, quit);
 		drawMenuCursor(mySpaceGlobals);
-		draw.flipBuffers(mySpaceGlobals.graphics);
+		drawd.flipBuffers(mySpaceGlobals.graphics);
 		mySpaceGlobals.invalid = 0;
 		
 enum { A, B, X, Y, Z, UP, DOWN, LEFT, RIGHT }
@@ -299,19 +300,19 @@ func displayGameOver(mySpaceGlobals):
 	if (mySpaceGlobals.invalid == 1):
 		blackout(mySpaceGlobals.graphics);
 		var gameover = "Game Over!"
-		draw.drawString(mySpaceGlobals.graphics, 25, 5, gameover);
+		drawd.drawString(mySpaceGlobals.graphics, 25, 5, gameover);
 		# only display score + pw if the player didn't use cheats
 		if (mySpaceGlobals.dontKeepTrackOfScore != 1):
 			var finalscore = "Score: %08d" % mySpaceGlobals.score
 			var passw = "Lv %d Password: %05d" % [mySpaceGlobals.level+1, mySpaceGlobals.passwordList[mySpaceGlobals.level]]
-			draw.drawString(mySpaceGlobals.graphics, 23, 7, finalscore);
-			draw.drawString(mySpaceGlobals.graphics, 21, 8, passw);
+			drawd.drawString(mySpaceGlobals.graphics, 23, 7, finalscore);
+			drawd.drawString(mySpaceGlobals.graphics, 21, 8, passw);
 		var resume = "Try Again"
 		var quit = "   Quit"
-		draw.drawString(mySpaceGlobals.graphics, 25, 13, resume);
-		draw.drawString(mySpaceGlobals.graphics, 25, 14, quit);
+		drawd.drawString(mySpaceGlobals.graphics, 25, 13, resume);
+		drawd.drawString(mySpaceGlobals.graphics, 25, 14, quit);
 		self.drawMenuCursor(mySpaceGlobals);
-		draw.flipBuffers(mySpaceGlobals.graphics);
+		drawd.flipBuffers(mySpaceGlobals.graphics);
 		mySpaceGlobals.invalid = 0;
 	# 100 passwords, one for each level
 	for x in range(100):

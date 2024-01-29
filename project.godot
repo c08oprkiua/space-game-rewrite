@@ -12,9 +12,12 @@ config_version=5
 
 config/name="Space Game RWE"
 config/description="Space Game by vgmoose redesigned for native functioning in the Godot game engine"
+config/tags=PackedStringArray("games", "wii_u")
 run/main_scene="res://Scenes/Base.tscn"
+run/disable_stdout=true
+run/disable_stderr=true
 config/use_hidden_project_data_directory=false
-config/features=PackedStringArray("4.1")
+config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://Assets/spacegame.png"
 boot_splash/fullsize=false
@@ -31,17 +34,17 @@ trigmath="*res://Classic/trigmath.gd"
 SpaceGlobals="*res://ReWritten/SpaceGlobals.gd"
 Satellite="*res://ReWritten/Satellite.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/size/viewport_width=427
 window/size/viewport_height=240
+window/vsync/vsync_mode=2
 window/size/width=427
 window/size/height=240
-
-[global]
-
-viewp=false
-view=false
 
 [gui]
 
@@ -155,6 +158,7 @@ shoot={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+gl_compatibility/driver.linuxbsd="opengl3_es"
 renderer/rendering_method="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 textures/lossless_compression/force_png=true

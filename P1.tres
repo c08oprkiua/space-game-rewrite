@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PlayerSettings" load_steps=2 format=3 uid="uid://buy2ad1uj7opa"]
+
+[ext_resource type="Script" path="res://ReWritten/PlayerGlobals.gd" id="1_ce3f1"]
+
+[resource]
+script = ExtResource("1_ce3f1")
+ProfileName = "ReadyPlayerOne"
+HighScore = 0
+SFX_Volume = 100
+MusicVolume = 100
+tripleShot = false
+doubleShot = false
+CanEditSpeed = false
+lives = 4
+speed = 400
+NoEnemies = false
+Kamikaze = false
+ShipType = 0
+RedBlueSwap = false
+bordertype = 0

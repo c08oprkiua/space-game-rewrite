@@ -1,4 +1,4 @@
-extends Resource
+extends Node
 class_name PRandom
 
 # This is from here: http://stackoverflow.com/a/1026370/1871287

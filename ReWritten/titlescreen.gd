@@ -14,8 +14,11 @@ func _ready():
 	if FileAccess.file_exists("user://settings.ini"):
 		options.show()
 
+func _enter_tree():
+	$"AnimationPlayer".play("startup")
+
 func _unhandled_input(event):
-	pass
+	print(event)
 
 func _on_start_game_pressed():
 	print("Start game")
@@ -24,12 +27,14 @@ func _on_options_pressed():
 	pass # Replace with function body.
 
 func _on_password_toggled(button_pressed):
+	var anim: Animation
 	if button_pressed:
-		logo.hide()
-		startgame.hide()
-		credits.hide()
-		options.hide()
-		passwordenter.show()
+		$"AnimationPlayer".play("fade-title")
+#		logo.hide()
+#		startgame.hide()
+#		credits.hide()
+#		options.hide()
+#		passwordenter.show()
 	else:
 		logo.show()
 		startgame.show()

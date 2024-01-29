@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://jl341jofs2n3"]
+
+[ext_resource type="Script" path="res://ReWritten/save_select.gd" id="1_jisf2"]
+
+[node name="Control" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jisf2")
+
+[node name="VSplitContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="HBoxContainer" parent="VSplitContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VSplitContainer/Name"]
+layout_mode = 2
+text = "Name:"
+
+[node name="field" type="Label" parent="VSplitContainer/Name"]
+layout_mode = 2
+
+[node name="HighScore" type="HBoxContainer" parent="VSplitContainer"]
+layout_mode = 2
+
+[node name="HighScore" type="Label" parent="VSplitContainer/HighScore"]
+layout_mode = 2
+text = "High Score: "
+
+[node name="Field" type="Label" parent="VSplitContainer/HighScore"]
+layout_mode = 2

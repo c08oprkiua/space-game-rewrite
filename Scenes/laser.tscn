@@ -67,4 +67,4 @@ shape = SubResource("RectangleShape2D_hhwbc")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ghomd")
 animation = &"laseranim"
-frame_progress = 0.562761
+frame_progress = 0.479619

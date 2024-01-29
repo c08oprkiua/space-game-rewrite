@@ -8,10 +8,10 @@ func _ready():
 
 
 var arrayvalue
-var x
-var y
-var m_x
-var m_y
+var x: int
+var y: int
+var m_x: int
+var m_y: int
 var active: bool = false
 
 func firelaser(pos, rot):

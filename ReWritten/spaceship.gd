@@ -13,12 +13,12 @@ extends CharacterBody2D
 #These values now also are interchangable with the d-pad inputs.
 #However, the d-pad will still return binary values, so true 8 direction
 #"d-pad movement" is still possible because of how these are used
-var rstick_x
-var lstick_x 
-var rstick_y 
-var lstick_y 
+var rstick_x: float
+var lstick_x: float
+var rstick_y: float
+var lstick_y: float 
 
-var shootspeed 
+var shootspeed: float
 
 #	- Joystick input (p1Move)
 #	- Bullet firing (p1Shoot)

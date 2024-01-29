@@ -1,7 +1,10 @@
 extends LineEdit
 
-var config = ConfigFile.new()
+#Change this to save changes to a userprofile file, which then can be read back by
+#both options and the game at runtime
 
+var config = ConfigFile.new()
+const userfile: String = "user://settings.ini"
 # Dear Github Viewer,
 #		Well, here's where you see the passwords I guess!
 #		With the exception of a few hardcoded ones, the
@@ -24,7 +27,7 @@ const ExtrasPassword = {
 	"82571": "noEnemies",
 	"30236": "Kamikaze",
 	"00000": "DefaultShip",
-	"22222": "NoAudio",
+	"22222": "NoAudio", #Depreciate? Replace?
 	"12345": "Galaga",
 	"77777": "RedBlueFlip",
 }
@@ -38,7 +41,7 @@ const CheatPassword = {
 }
 
 func _ready():
-	config.load("user://settings.ini")
+	config.load(userfile)
 
 func tryPassword(password):
 	if EasterPasswords.has(password):
@@ -47,7 +50,7 @@ func tryPassword(password):
 		config.set_value("Extras", ExtrasPassword.get(password), true)
 	elif CheatPassword.has(password):
 		config.set_value("Cheats", CheatPassword.get(password), true)
-	config.save("user://settings.ini")
+	config.save(userfile)
 
 #The following will instead be checked through the configfile at runtime
 
@@ -156,7 +159,7 @@ func doPasswordMenuAction(mySpaceGlobals):
 		var left   = (mySpaceGlobals.buttonLEFT  || stickX < -0.3);
 		var right  = (mySpaceGlobals.buttonRIGHT || stickX >  0.3);
 		if (up || down):
-			var offset = 1
+			var offset: int = 1
 			# keep going up in the 10s place to match current choice
 			for x in range(4 - mySpaceGlobals.menuChoice):
 				offset *= 10;

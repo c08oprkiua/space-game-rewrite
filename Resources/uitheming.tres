@@ -1,0 +1,18 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://b7kh7cuwrfj18"]
+
+[ext_resource type="FontFile" uid="uid://bq05dv50v006w" path="res://Assets/mplus-2m-medium.ttf" id="1_hp8au"]
+[ext_resource type="StyleBox" uid="uid://r1wrh1qmwea4" path="res://Assets/focusedmenuitem.tres" id="2_wd7ol"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jrnty"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jg38j"]
+
+[resource]
+Button/font_sizes/font_size = 12
+Button/fonts/font = ExtResource("1_hp8au")
+Button/styles/focus = ExtResource("2_wd7ol")
+Button/styles/normal = SubResource("StyleBoxEmpty_jrnty")
+Button/styles/pressed = SubResource("StyleBoxEmpty_jg38j")
+Label/font_sizes/font_size = 12
+Label/fonts/font = ExtResource("1_hp8au")
+LineEdit/font_sizes/font_size = 12

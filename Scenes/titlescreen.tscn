@@ -1,11 +1,72 @@
-[gd_scene load_steps=5 format=3 uid="uid://cf6iwyfkkmmap"]
+[gd_scene load_steps=9 format=3 uid="uid://cf6iwyfkkmmap"]
 
-[ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://uitheming.tres" id="1_1h6uu"]
+[ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://Resources/uitheming.tres" id="1_ke087"]
 [ext_resource type="Script" path="res://ReWritten/titlescreen.gd" id="2_5lwpv"]
 [ext_resource type="Texture2D" uid="uid://bqe108dt1oarl" path="res://Assets/spacegame.png" id="3_46dme"]
 [ext_resource type="Script" path="res://ReWritten/passwordmanager.gd" id="4_pwwnn"]
+[ext_resource type="Animation" uid="uid://dqtwha7bogr3s" path="res://Resources/Animations/fade-title-2.res" id="5_o07dg"]
+[ext_resource type="Animation" uid="uid://8dx8ano12pa8" path="res://Resources/Animations/startup.res" id="6_k6uoe"]
+
+[sub_resource type="Animation" id="Animation_non8g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpaceGame:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Options:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Password:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StartGame:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6i4qq"]
+_data = {
+"RESET": SubResource("Animation_non8g"),
+"fade-title": ExtResource("5_o07dg"),
+"startup": ExtResource("6_k6uoe")
+}
 
 [node name="TitleScreen" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +74,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme = ExtResource("1_1h6uu")
+theme = ExtResource("1_ke087")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -22,8 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("1_1h6uu")
+theme = ExtResource("1_ke087")
 
 [node name="MainMenu" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
@@ -38,6 +98,7 @@ action_mode = 0
 texture_normal = ExtResource("3_46dme")
 
 [node name="Credits" type="Label" parent="CenterContainer/MainMenu"]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
 text = "by vgmoose"
@@ -45,7 +106,6 @@ horizontal_alignment = 2
 
 [node name="StartGame" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 0
 action_mode = 0
 text = "Start Game"
@@ -53,14 +113,12 @@ text = "Start Game"
 [node name="Options" type="Button" parent="CenterContainer/MainMenu"]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 0
 action_mode = 0
 text = "Options"
 
 [node name="Password" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 0
 toggle_mode = true
 action_mode = 0
@@ -68,14 +126,19 @@ text = "Password"
 
 [node name="PassEnt" type="LineEdit" parent="CenterContainer/MainMenu"]
 visible = false
+self_modulate = Color(0, 0, 0, 0)
 layout_mode = 2
-size_flags_horizontal = 4
 placeholder_text = "00000"
 alignment = 1
 max_length = 5
 expand_to_text_length = true
 virtual_keyboard_type = 2
 script = ExtResource("4_pwwnn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/MainMenu"]
+libraries = {
+"": SubResource("AnimationLibrary_6i4qq")
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

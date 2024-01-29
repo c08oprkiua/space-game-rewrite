@@ -7,10 +7,10 @@ func _ready():
 	Satellite.connect("firelaser", firelaser)
 
 var arrayvalue
-var x
-var y
-var m_x
-var m_y
+var x: int
+var y: int
+var m_x: int
+var m_y: int
 var active: bool = false
 
 #Self note: The bullet will store an integer. This is its number. 
@@ -19,7 +19,7 @@ var active: bool = false
 
 func initBullets(array):
 	arrayvalue = array
-	for x in range(SpaceGlobals.BULLET_COUNT):
+	for bullets in range(SpaceGlobals.BULLET_COUNT):
 		var bullet = {
 			"x": 0,
 			"y": 0,
@@ -36,8 +36,8 @@ func firelaser(pos, rot):
 func RenderBullets():
 	pass
 	# for all active bullets, advance them
-	for x in range(SpaceGlobals.BULLET_COUNT):
-		if (SpaceGlobals.bullets[x].active == 1):
+	for bullet in range(SpaceGlobals.BULLET_COUNT):
+		if (SpaceGlobals.bullets[bullet].active == 1):
 			for z in range(4):
 				for za in range(2):
 					#draw.drawPixel(SpaceGlobals.graphics, SpaceGlobals.bullets[x].x + z, SpaceGlobals.bullets[x].y + za, 255, 0, 0);

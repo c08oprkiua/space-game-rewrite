@@ -1,14 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://r64nvcr8px2x"]
+[gd_scene load_steps=10 format=3 uid="uid://r64nvcr8px2x"]
 
+[ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://Resources/uitheming.tres" id="1_papj1"]
 [ext_resource type="PackedScene" uid="uid://brinaxqcvgqky" path="res://Scenes/spaceship.tscn" id="2_ahso2"]
-[ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://uitheming.tres" id="2_xo6n8"]
 [ext_resource type="Script" path="res://ReWritten/PlayingUI.gd" id="3_l26b7"]
 [ext_resource type="Script" path="res://ReWritten/PlayingField.gd" id="4_x2gke"]
+[ext_resource type="Shape2D" uid="uid://dgfaq25711jc2" path="res://Resources/GameplayBounds/TopBounds.tres" id="5_v8rj8"]
+[ext_resource type="Shape2D" uid="uid://dfne6w3at8geu" path="res://Resources/GameplayBounds/BottomBounds.tres" id="6_vdll0"]
+[ext_resource type="Shape2D" uid="uid://btodifsilahp2" path="res://Resources/GameplayBounds/LeftBounds.tres" id="7_3uwbv"]
+[ext_resource type="Shape2D" uid="uid://cphyxale27y5n" path="res://Resources/GameplayBounds/RightBounds.tres" id="8_ooy8b"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xa5mh"]
+rough = true
+absorbent = true
 
 [node name="MainGameplay" type="Node2D"]
 process_mode = 1
 
-[node name="Control" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 top_level = true
 layout_mode = 3
 anchors_preset = 15
@@ -16,39 +24,42 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_xo6n8")
+theme = ExtResource("1_papj1")
 script = ExtResource("3_l26b7")
 
-[node name="Score" type="Label" parent="Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 0
+
+[node name="Score" type="Label" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 text = "Score:"
 
-[node name="Level" type="Label" parent="Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
-grow_horizontal = 2
+[node name="Level" type="Label" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 text = "Level"
 horizontal_alignment = 1
 
-[node name="Lives" type="Label" parent="Control"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
-grow_horizontal = 0
+[node name="Lives" type="Label" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
 text = "Lives"
 horizontal_alignment = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="Control"]
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
 process_mode = 2
 visible = false
 layout_mode = 1
@@ -58,25 +69,61 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Resume" type="Button" parent="Control/CenterContainer/VBoxContainer"]
+[node name="Resume" type="Button" parent="UI/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Resume"
 
-[node name="Quit" type="Button" parent="Control/CenterContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="UI/CenterContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 text = "Quit"
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Entities" type="Node2D" parent="."]
 light_mask = 2
 visibility_layer = 2
 script = ExtResource("4_x2gke")
 
-[node name="Spaceship" parent="Node2D" instance=ExtResource("2_ahso2")]
+[node name="Spaceship" parent="Entities" instance=ExtResource("2_ahso2")]
 light_mask = 2
 visibility_layer = 2
 position = Vector2(150, 130)
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="TopBounds" type="StaticBody2D" parent="Boundaries"]
+physics_material_override = SubResource("PhysicsMaterial_xa5mh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/TopBounds"]
+shape = ExtResource("5_v8rj8")
+one_way_collision_margin = 2.0
+debug_color = Color(0, 0.6, 0.701961, 1)
+
+[node name="BottomBounds" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(427, 240)
+physics_material_override = SubResource("PhysicsMaterial_xa5mh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BottomBounds"]
+shape = ExtResource("6_vdll0")
+one_way_collision_margin = 2.0
+debug_color = Color(0.321569, 0.529412, 0.27451, 1)
+
+[node name="LeftBounds" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(0, 240)
+physics_material_override = SubResource("PhysicsMaterial_xa5mh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/LeftBounds"]
+shape = ExtResource("7_3uwbv")
+one_way_collision_margin = 2.0
+debug_color = Color(0, 0.6, 0.701961, 1)
+
+[node name="RightBounds" type="StaticBody2D" parent="Boundaries"]
+physics_material_override = SubResource("PhysicsMaterial_xa5mh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/RightBounds"]
+shape = ExtResource("8_ooy8b")
+one_way_collision_margin = 2.0
+debug_color = Color(0, 0.6, 0.701961, 1)

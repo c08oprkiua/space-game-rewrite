@@ -1,0 +1,5 @@
+[gd_resource type="WorldBoundaryShape2D" format=3 uid="uid://cphyxale27y5n"]
+
+[resource]
+normal = Vector2(-1, 0)
+distance = -427.0

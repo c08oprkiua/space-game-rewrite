@@ -1,21 +1,24 @@
 extends TextureRect
+
 #	- Star draw.drawing (renderStars)
 
-var xMinBoundry = 0
-var xMaxBoundry = 427
-var yMinBoundry = 0
-var yMaxBoundry = 240
+var xMinBoundry: int = 0
+var xMaxBoundry: int = 427
+var yMinBoundry: int = 0
+var yMaxBoundry: int = 240
 
-var stars = []
+var stars: Array = []
+var starimg = Image.create(427,240, false, Image.FORMAT_ETC)
 
 var starthread = Thread.new()
 
 func _ready():
-	starthread.start(initStars())
-
+	print("Google")
+	initStars()
 
 func initStars():
 	# create the stars randomly
+	print("Wants")
 	for x in range(200):
 		var star = {
 			"x": 0,
@@ -33,10 +36,12 @@ func initStars():
 		stars[x].r = 255 if (randomNum <= 2) else 0;
 		stars[x].g = 255 if (randomNum <= 2) else 0;
 		stars[x].b = 255 if (randomNum != 2) else 0;
+		print(stars[x])
 	renderStars()
 
 func renderStars():
 	# don't draw.draw stars if the player is on their last life and died
+	#I'm going to change this so that this just pauses when the player dies
 	if (SpaceGlobals.lives == 1 && SpaceGlobals.playerExplodeFrame > 1):
 		return;
 	drawPixels(SpaceGlobals.graphics)

@@ -105,7 +105,7 @@ var touchY
 var level = 0
 var enemiesSeekPlayer = 0
 var dontKeepTrackOfScore = 0
-var score = 0
+var score:int = 0
 var displayHowToPlay = false
 var firstShotFired
 
@@ -118,7 +118,7 @@ var graphics = {
 #	"labelController": labelController
 #	"editableScreen": editableScreen
 #	"screenTexture": screenTexture
-	"flipColor": 1,
+	"flipColor": true,
 }
 
 var images = Images.new()
@@ -229,3 +229,10 @@ func increaseScore(inc):
 #	mySpaceGlobals["p1Y"] = 0
 #	mySpaceGlobals["angle"] = 0
 #	mySpaceGlobals["frame"] = 0
+
+func SettingsCheck(directory: String):
+	if FileAccess.file_exists(directory):
+		return ResourceLoader.load(directory)
+	else:
+		var prof: PlayerSettings = PlayerSettings.new()
+		return prof
