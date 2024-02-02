@@ -1,20 +1,20 @@
 extends VBoxContainer
 
-@onready var logo = $"SpaceGame"
-@onready var credits = $"Credits"
-@onready var startgame = $"StartGame"
-@onready var password = $"Password"
-@onready var passwordenter = $"PassEnt" 
-@onready var options = $"Options"
+@onready var logo:TextureButton = $"SpaceGame"
+@onready var credits:Label = $"Credits"
+@onready var startgame:Button = $"StartGame"
+@onready var password:Button = $"Password"
+@onready var passwordenter:LineEdit = $"PassEnt" 
+@onready var options:Button = $"Options"
 #	- Handling the menu at the title screen (doMenuAction)
 
-func _ready():
+func _ready() -> void:
 	#Have some stuff in here about opening a thread and loading up the main scene in the background
 	startgame.grab_focus()
 	if FileAccess.file_exists("user://settings.ini"):
 		options.show()
 
-func _enter_tree():
+func _enter_tree() -> void:
 	$"AnimationPlayer".play("startup")
 
 func _unhandled_input(event):

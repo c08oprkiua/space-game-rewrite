@@ -8,14 +8,14 @@ var xseed
 func _init(initialSeed):
 	xseed = initialSeed
 
-func prand():
+func prand() -> void:
 	var next = xseed
-	var result
+	var result:int
 	next *= 1103515245
 	next += 12345
 	result = int(next / 65536) % 2048
 	result = ~result
-
+	
 	next *= 1103515245;
 	next += 12345;
 	result <<= 10;

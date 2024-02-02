@@ -12,7 +12,7 @@ var SCALER = Vector2(1,1)
 var windowSize
 var gamepad
 
-var initialized = false
+var initialized:bool = false
 
 var labelController
 
@@ -30,25 +30,25 @@ var playerExplodeFrame: int = 0
 
 var enemy = null
 var enemies
-var noEnemies = false
+var noEnemies:bool = false
 
-var xMinBoundry = 0
-var xMaxBoundry = 427
-var yMinBoundry = 0
-var yMaxBoundry = 240
+var xMinBoundry:int = 0
+var xMaxBoundry:int = 427
+var yMinBoundry:int = 0
+var yMaxBoundry:int = 240
 
 var rstick_x
 var rstick_y
 
-var MAX_ENEMIES = 100
-var BULLET_COUNT = 20
-var bullets = []
+var MAX_ENEMIES:int = 100
+var BULLET_COUNT:int = 20
+var bullets:Array = []
 
 var spedUpMusic
 var flipColor: int = 0
 
 # Flag for restarting the entire game.
-var restart = 1
+var restart:int = 1
 
 # initial state is title screen
 #The state variable has become a signal, and is compared to state the constant (dictionary)
@@ -92,21 +92,21 @@ var title
 	#the various Input singletons
 
 #var curPalette = images.ship_palette
-var transIndex = 14
-var passwordEntered = 0
-var quit = 0
+var transIndex:int = 14
+var passwordEntered:int = 0
+var quit:int = 0
 #  initialize starfield for this game
-var invalid = 1
+var invalid:int = 1
 
 var touched
 var touchX
 var touchY
 
-var level = 0
-var enemiesSeekPlayer = 0
-var dontKeepTrackOfScore = 0
+var level:int = 0
+var enemiesSeekPlayer:int = 0
+var dontKeepTrackOfScore:int = 0
 var score:int = 0
-var displayHowToPlay = false
+var displayHowToPlay:bool = false
 var firstShotFired
 
 var button
@@ -125,16 +125,16 @@ var images = Images.new()
 
 var rotated_ship = []
 
-var enemy_palette = images.enemy_palette
-var title_palette = images.title_palette
-var compressed_ship = images.compressed_ship
-var compressed_ship2 = images.compressed_ship2
-var ship_palette = images.ship_palette
-var ship2_palette = images.ship2_palette
-var compressed_boss = images.compressed_boss
-var boss_palette = images.boss_palette
-var compressed_boss2 = images.compressed_boss2
-var boss2_palette = images.boss2_palette
+var enemy_palette:Array = images.enemy_palette
+var title_palette:Array = images.title_palette
+var compressed_ship:Array = images.compressed_ship
+var compressed_ship2:Array = images.compressed_ship2
+var ship_palette:Array = images.ship_palette
+var ship2_palette:Array = images.ship2_palette
+var compressed_boss:Array = images.compressed_boss
+var boss_palette:Array = images.boss_palette
+var compressed_boss2:Array = images.compressed_boss2
+var boss2_palette:Array = images.boss2_palette
 
 var trigmath
 

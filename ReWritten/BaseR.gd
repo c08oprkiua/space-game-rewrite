@@ -179,12 +179,12 @@ func render(mySpaceGlobals):
 		mySpaceGlobals.invalid = 0;
 
 # see the notes in images.c for more info on how this works
-func decompress_sprite(arraysize, width, height, input, target, transIndex):
-	var cx = 0
-	var cy = 0;
-	var posinrow = 0;
+func decompress_sprite(arraysize:int, width, height, input, target, transIndex):
+	var cx:int = 0
+	var cy:int = 0;
+	var posinrow:int = 0;
 	# go through input array
-	var x = 0
+	var x:int = 0
 	while x < arraysize:
 		var count = input[x];
 		var value = input[x+1];
@@ -221,15 +221,15 @@ func drawMenuCursor(mySpaceGlobals):
 	drawd.fillRect(mySpaceGlobals.graphics, 138, 164, 16, 30, 0, 0, 0);
 	drawd.fillRect(mySpaceGlobals.graphics, 250, 164, 16, 30, 0, 0, 0);
 	# display the cursor on the correct item
-	var cursor = "[[            ]]"
+	var cursor:String = "[[            ]]"
 	drawd.drawString(mySpaceGlobals.graphics, 21, 13 + mySpaceGlobals.menuChoice, cursor);
 
 func displayPause(mySpaceGlobals):
 	if (mySpaceGlobals.invalid == 1):
 		blackout(mySpaceGlobals.graphics);
 		# display the password here
-		var resume = "Resume"
-		var quit = " Quit"
+		var resume:String = "Resume"
+		var quit:String = " Quit"
 		drawd.drawString(mySpaceGlobals.graphics, 27, 13, resume);
 		drawd.drawString(mySpaceGlobals.graphics, 27, 14, quit);
 		drawMenuCursor(mySpaceGlobals);
@@ -299,16 +299,16 @@ func addNewEnemies(mySpaceGlobals):
 func displayGameOver(mySpaceGlobals):
 	if (mySpaceGlobals.invalid == 1):
 		blackout(mySpaceGlobals.graphics);
-		var gameover = "Game Over!"
+		var gameover:String = "Game Over!"
 		drawd.drawString(mySpaceGlobals.graphics, 25, 5, gameover);
 		# only display score + pw if the player didn't use cheats
 		if (mySpaceGlobals.dontKeepTrackOfScore != 1):
-			var finalscore = "Score: %08d" % mySpaceGlobals.score
-			var passw = "Lv %d Password: %05d" % [mySpaceGlobals.level+1, mySpaceGlobals.passwordList[mySpaceGlobals.level]]
+			var finalscore:String = "Score: %08d" % mySpaceGlobals.score
+			var passw:String = "Lv %d Password: %05d" % [mySpaceGlobals.level+1, mySpaceGlobals.passwordList[mySpaceGlobals.level]]
 			drawd.drawString(mySpaceGlobals.graphics, 23, 7, finalscore);
 			drawd.drawString(mySpaceGlobals.graphics, 21, 8, passw);
-		var resume = "Try Again"
-		var quit = "   Quit"
+		var resume:String = "Try Again"
+		var quit:String = "   Quit"
 		drawd.drawString(mySpaceGlobals.graphics, 25, 13, resume);
 		drawd.drawString(mySpaceGlobals.graphics, 25, 14, quit);
 		self.drawMenuCursor(mySpaceGlobals);
