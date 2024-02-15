@@ -20,16 +20,16 @@ func firelaser(pos, rot):
 	pass
 
 
-func InitBullets():
+func InitBullets() -> void:
 	# init bullets
 	for bullets in SpaceGlobals.BULLET_COUNT:
 		add_child(laser.instantiate())
 		Satellite.emit_signal("laserinit", bullets)
 
-func initBullets(array):
+func initBullets(array) -> void:
 	arrayvalue = array
 	for x in range(SpaceGlobals.BULLET_COUNT):
-		var bullet = {
+		var bullet:Dictionary = {
 			"x": 0,
 			"y": 0,
 			"m_x": 0,

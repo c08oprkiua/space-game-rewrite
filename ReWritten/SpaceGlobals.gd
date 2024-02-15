@@ -2,13 +2,13 @@ extends Node2D
 
 var player
 
-var a = 0;
+var a:int = 0;
 
 var screenImage
 var screenTexture
 var editableScreen
 
-var SCALER = Vector2(1,1)
+var SCALER:Vector2i = Vector2i(1,1)
 var windowSize
 var gamepad
 

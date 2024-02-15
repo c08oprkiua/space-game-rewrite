@@ -24,10 +24,10 @@ var shootspeed: float
 #	- Bullet firing (p1Shoot)
 #	- Player look direction (p1look)
 
-func _ready():
+func _ready() -> void:
 	set_scale(SpaceGlobals.SCALER)
 
-func _process(_delta):
+func _process(_delta:float) -> void:
 	rstick_x = Input.get_axis("shoot_left","shoot_right")
 	lstick_x = Input.get_axis("left","right")
 	rstick_y = Input.get_axis("shoot_up", "shoot_down")
@@ -36,10 +36,10 @@ func _process(_delta):
 	p1look()
 	p1Shoot()
 
-func _physics_process(_delta):
+func _physics_process(_delta:float) -> void:
 	p1Move()
 
-func p1Shoot():
+func p1Shoot() -> void:
 	if (SpaceGlobals.playerExplodeFrame > 1):
 		return
 	if Input.is_action_pressed("shoot"):
@@ -85,11 +85,11 @@ func p1Shoot():
 #					break;
 
 #Updates player1 location
-func p1Move():
+func p1Move() -> void:
 	# can't move while exploding
 	if SpaceGlobals.playerExplodeFrame > 1:
 		return
-	var direction = Input.get_vector("left","right","up", "down")
+	var direction:Vector2 = Input.get_vector("left","right","up", "down")
 	velocity = direction * settings.speed
 	move_and_slide()
 
@@ -121,16 +121,16 @@ func p1Move():
 		if (SpaceGlobals.score >= 50 && !SpaceGlobals.firstShotFired):
 			SpaceGlobals.displayHowToPlay = 1;
 
-func p1look():
+func p1look() -> void:
 	if shootspeed > 0:
 		look_at(get_global_mouse_position())
 		return
 	if rstick_x != 0 or rstick_y != 0:
-		var lookrot = Input.get_vector("shoot_left","shoot_right","shoot_up", "shoot_down").angle()
+		var lookrot:float = Input.get_vector("shoot_left","shoot_right","shoot_up", "shoot_down").angle()
 		set_rotation_degrees(rad_to_deg(lookrot))
 		return
 	if lstick_x != 0 or lstick_y != 0:
-		var rotangl = Input.get_vector("left","right","up", "down").angle()
+		var rotangl:float = Input.get_vector("left","right","up", "down").angle()
 		set_rotation_degrees(rad_to_deg(rotangl))
 		return
 

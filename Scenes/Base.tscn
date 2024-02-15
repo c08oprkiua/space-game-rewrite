@@ -26,6 +26,41 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_eiii8")
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Gameview" type="SubViewport" parent="SubViewportContainer"]
+disable_3d = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+canvas_item_default_texture_filter = 3
+physics_object_picking = true
+gui_embed_subwindows = true
+sdf_oversize = 0
+sdf_scale = 0
+size = Vector2i(427, 240)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Stars" parent="SubViewportContainer/Gameview" instance=ExtResource("5_87lrl")]
+show_behind_parent = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="TitleScreen" parent="SubViewportContainer/Gameview" instance=ExtResource("2_c6p06")]
+top_level = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MainGameplay" parent="SubViewportContainer/Gameview" instance=ExtResource("4_gunar")]
+visible = false
+
 [node name="WiiUGamepad" type="TextureRect" parent="."]
 visible = false
 layout_mode = 1
@@ -91,7 +126,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="FullScreen" type="TextureRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -100,37 +134,3 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_is3bx")
 stretch_mode = 5
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Gameview" type="SubViewport" parent="SubViewportContainer"]
-disable_3d = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 3
-physics_object_picking = true
-gui_embed_subwindows = true
-sdf_oversize = 0
-sdf_scale = 0
-size = Vector2i(427, 240)
-size_2d_override_stretch = true
-render_target_update_mode = 4
-
-[node name="Stars" parent="SubViewportContainer/Gameview" instance=ExtResource("5_87lrl")]
-show_behind_parent = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 1
-
-[node name="TitleScreen" parent="SubViewportContainer/Gameview" instance=ExtResource("2_c6p06")]
-top_level = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="MainGameplay" parent="SubViewportContainer/Gameview" instance=ExtResource("4_gunar")]
-visible = false

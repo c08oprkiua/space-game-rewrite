@@ -14,7 +14,7 @@ func _ready():
 		gameview.get_texture()
 	Satellite.connect("state", Changestate)
 	
-func Changestate(state):
+func Changestate(state:int):
 	match state:
 		1:
 			#Title screen
@@ -53,11 +53,11 @@ func _input(event):
 # pong example, but also I believe neccesary since global variables don't seem to be able to be set(?)
 
 #var target = 
-var images = Images.new()
+var images:Images = Images.new()
 
-var orig_ship = []
-var rotated_ship = []
-var title = []
+var orig_ship:Array = []
+var rotated_ship:Array = []
+var title:Array = []
 
 var enemy_palette = images.enemy_palette
 var title_palette = images.title_palette
@@ -81,7 +81,7 @@ var trigmath
 # this multiplier will modify all original game speeds to scale them back
 # to one that feels more like how it ran on console
 # it can be removed with password 60185
-var FPS_MULT = 40
+var FPS_MULT:int = 40
 
 
 

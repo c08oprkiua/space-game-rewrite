@@ -11,18 +11,18 @@ var stars: Array = []
 var RNG:RandomNumberGenerator = RandomNumberGenerator.new()
 var initialloop: bool = true
 
-var starthread = Thread.new()
+var starthread:Thread = Thread.new()
 
 signal newstarimg
 
-func _ready():
+func _ready() -> void:
 	connect.call_deferred("SetBG", SetBG)
 	starimg.fill(imgbg)
 	initStars()
 
 
 #I think this is broken, it doesn't appear that blue colors get used
-func initStars():
+func initStars() -> void:
 	# create the stars randomly
 	for x in range(200):
 		var star: Dictionary = {
@@ -39,7 +39,7 @@ func initStars():
 		stars.append(star)
 		stars[x].x = RNG.randi_range(xMinBoundry, xMaxBoundry-1)
 		stars[x].y = RNG.randi_range(yMinBoundry, yMaxBoundry-1)
-		var randomNum = RNG.randi_range(0, 5)
+		var randomNum:int = RNG.randi_range(0, 5)
 		# half of the time make them white, 1/4 yellow, 1/4 blue
 #		stars[x].r = 255 if (randomNum <= 2) else 0
 #		stars[x].g = 255 if (randomNum <= 2) else 0
@@ -54,25 +54,25 @@ func initStars():
 	initialloop = false
 	emit_signal("newstarimg")
 
-func drawPixels():
+func drawPixels() -> void:
 	for rx in range(200):
 		putAPixel(rx);
 	emit_signal("newstarimg")
 
-func putAPixel(rx: int):
+func putAPixel(rx: int) -> void:
 	if not initialloop:
 		pass #code that blacks out a star so we don't have more than 200 onscreen
 	if SpaceGlobals.graphics.flipColor:
-		var temp = stars[rx].r
+		var temp:int = stars[rx].r
 		stars[rx].r = stars[rx].b;
 		stars[rx].b = temp;
-	var starTint = Color(stars[rx].r, stars[rx].g, stars[rx].b)
+	var starTint:Color = Color(stars[rx].r, stars[rx].g, stars[rx].b)
 	starimg.set_pixel(stars[rx].x, stars[rx].y, starTint)
 
-func putAPixelRand():
+func putAPixelRand() -> void:
 	var randint: int = randi_range(0, 200)
 	putAPixel(randint)
 
-func SetBG():
-	var img = ImageTexture.create_from_image(starimg)
+func SetBG() -> void:
+	var img:ImageTexture = ImageTexture.create_from_image(starimg)
 	$"Stars".texture = img

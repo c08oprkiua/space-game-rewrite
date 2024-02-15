@@ -20,13 +20,13 @@ func _enter_tree() -> void:
 func _unhandled_input(event):
 	print(event)
 
-func _on_start_game_pressed():
+func _on_start_game_pressed() -> void:
 	print("Start game")
 
-func _on_options_pressed():
+func _on_options_pressed() -> void:
 	pass # Replace with function body.
 
-func _on_password_toggled(button_pressed):
+func _on_password_toggled(button_pressed:bool):
 	var anim: Animation
 	if button_pressed:
 		$"AnimationPlayer".play("fade-title")
@@ -43,7 +43,7 @@ func _on_password_toggled(button_pressed):
 			options.show()
 		passwordenter.hide()
 
-func _on_space_game_pressed():
+func _on_space_game_pressed() -> void:
 	print("Original Godot 3 version by vgmoose. Godot 4 port and optimization by c08oprkiua")
 
 
@@ -135,13 +135,13 @@ func Focuschangecheck():
 	pass
 
 
-func _on_password_focus_entered():
+func _on_password_focus_entered() -> void:
 	password.text = ">> Password <<"
 
 
-func _on_options_focus_entered():
+func _on_options_focus_entered() -> void:
 	pass # Replace with function body.
 
 
-func _on_start_game_focus_entered():
+func _on_start_game_focus_entered() -> void:
 	pass # Replace with function body.

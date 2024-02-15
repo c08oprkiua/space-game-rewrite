@@ -3,7 +3,7 @@ extends LineEdit
 #Change this to save changes to a userprofile file, which then can be read back by
 #both options and the game at runtime
 
-var config = ConfigFile.new()
+var config:ConfigFile = ConfigFile.new()
 const userfile: String = "user://settings.ini"
 # Dear Github Viewer,
 #		Well, here's where you see the passwords I guess!
@@ -40,10 +40,10 @@ const CheatPassword = {
 	"99499": "99lives",
 }
 
-func _ready():
+func _ready() -> void:
 	config.load(userfile)
 
-func tryPassword(password):
+func tryPassword(password:String) -> void:
 	if EasterPasswords.has(password):
 		OS.shell_open(EasterPasswords.get(password))
 	elif ExtrasPassword.has(password):

@@ -1,6 +1,6 @@
 extends Area2D
 
-func _ready():
+func _ready() -> void:
 	set_scale(SpaceGlobals.SCALER)
 	hide()
 	Satellite.connect("laserinit", initBullets, 4)
@@ -17,10 +17,10 @@ var active: bool = false
 #This number shall be present in the BULLET_COUNT array, so that the game can 
 #Call the bullet to move if the item in the BULLET_COUNT matches the number
 
-func initBullets(array):
+func initBullets(array) -> void:
 	arrayvalue = array
 	for bullets in range(SpaceGlobals.BULLET_COUNT):
-		var bullet = {
+		var bullet:Dictionary = {
 			"x": 0,
 			"y": 0,
 			"m_x": 0,
@@ -33,7 +33,7 @@ func firelaser(pos, rot):
 	position = pos
 	rotation = rot
 
-func RenderBullets():
+func RenderBullets() -> void:
 	pass
 	# for all active bullets, advance them
 	for bullet in range(SpaceGlobals.BULLET_COUNT):
@@ -46,7 +46,7 @@ func RenderBullets():
 
 # moveBullets should be replaced with the bullets becoming nodes with hitboxes and velocity
 #	moveBullets(mySpaceGlobals);
-func moveBullets():
+func moveBullets() -> void:
 	pass
 	# for all active bullets, advance them
 	for x in range(SpaceGlobals.BULLET_COUNT):
