@@ -186,4 +186,3 @@ func doPasswordMenuAction(mySpaceGlobals):
 			mySpaceGlobals.passwordEntered = 0;
 		if (mySpaceGlobals.passwordEntered > 99999):
 			mySpaceGlobals.passwordEntered = 99999;
-

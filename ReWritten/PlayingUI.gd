@@ -28,7 +28,7 @@ func nagtheplayer() -> void:
 	var nag: String = "Rapid fire with right stick or touch!"
 	dRaw.drawString(SpaceGlobals.graphics, 17, 17, nag)
 
-func nevermind(_position, _rotation):
+func nevermind(_position, _rotation) -> void:
 	Satellite.disconnect("displayHowToPlay", nagtheplayer)
 	Satellite.disconnect("firelaser", nevermind)
 

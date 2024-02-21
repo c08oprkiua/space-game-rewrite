@@ -3,13 +3,14 @@ class_name PRandom
 
 # This is from here: http://stackoverflow.com/a/1026370/1871287
 # it is initially seeded with the time
-var xseed
+var xseed:float
 
-func _init(initialSeed):
+func _init(initialSeed:float = 0) -> void:
 	xseed = initialSeed
+	print("Initial seed is "+ String.num(initialSeed))
 
 func prand() -> void:
-	var next = xseed
+	var next:float = xseed
 	var result:int
 	next *= 1103515245
 	next += 12345

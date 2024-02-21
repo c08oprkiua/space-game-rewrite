@@ -85,7 +85,7 @@ var FPS_MULT:int = 40
 
 
 
-func _init(mySpaceGlobals):
+func _init(mySpaceGlobals: = SpaceGlobals):
 #	drawd = Draw.new()
 	trigmath = PRandom.new(mySpaceGlobals.seed)
 	mySpaceGlobals["invalid"]= 1

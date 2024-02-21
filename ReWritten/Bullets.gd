@@ -29,7 +29,7 @@ func initBullets(array) -> void:
 		}
 		SpaceGlobals.bullets.append(bullet)
 
-func firelaser(pos, rot):
+func firelaser(pos, rot) -> void:
 	position = pos
 	rotation = rot
 

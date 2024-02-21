@@ -16,7 +16,7 @@ var starthread:Thread = Thread.new()
 signal newstarimg
 
 func _ready() -> void:
-	connect.call_deferred("SetBG", SetBG)
+	#connect("SetBG", SetBG)
 	starimg.fill(imgbg)
 	initStars()
 

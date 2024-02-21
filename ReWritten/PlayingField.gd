@@ -2,7 +2,7 @@ extends Node2D
 
 var laser = preload("res://Scenes/laser.tscn")
 
-func _ready():
+func _ready() -> void:
 	Satellite.connect("firelaser", firelaser)
 	InitBullets()
 
@@ -14,7 +14,7 @@ var m_x: int
 var m_y: int
 var active: bool = false
 
-func firelaser(pos, rot):
+func firelaser(pos, rot) -> void:
 	var newlaser = laser.instantiate()
 	
 	pass
@@ -38,7 +38,7 @@ func initBullets(array) -> void:
 		}
 		SpaceGlobals.bullets.append(bullet)
 
-func RenderBullets():
+func RenderBullets() -> void:
 	pass
 	# for all active bullets, advance them
 	for x in range(SpaceGlobals.BULLET_COUNT):

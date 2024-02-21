@@ -1,4 +1,7 @@
-extends Node2D
+extends Node
+class_name SpacGlob
+
+var seed:float = 4.20
 
 var player
 
@@ -60,12 +63,12 @@ const state = {
 	-27: "for password inputs",
 }
 #Anything not in that dictionary is gameplay
-var titleScreenRefresh = 1
+var titleScreenRefresh:int = 1
 
 # Flags for render states
-var renderResetFlag = 0
-var menuChoice = 0
-const menuChoiceDict = {
+var renderResetFlag:int = 0
+var menuChoice:int = 0
+const menuChoiceDict:Dictionary = {
 	0: "play",
 	1: "password",
 }
@@ -80,13 +83,13 @@ var frame: int = 0
 #The folowing have been moved: 
 	#These have been changed to per-player, for the sake of futureproofing and the fact that having 
 	# them configurable per-player just makes sense imho
-var tripleShot = false
-var doubleShot = false
+var tripleShot:bool = false
+var doubleShot:bool = false
 var orig_ship
 
 	#Moved to the password manager script, which entirely manages all passwords in the game for the 
 	#sake of that code not bloating up a different script
-var passwordList = []
+var passwordList:Array = []
 var title 
 	#All input variables are entirely gone, because that can be natively handled in Godot through
 	#the various Input singletons
@@ -111,7 +114,7 @@ var firstShotFired
 
 var button
 
-var graphics = {
+var graphics:Dictionary = {
 #	classicMain: self,
 	"nxFont": false,
 #	"spaceGlobals" = mySpaceGlobals
@@ -121,9 +124,9 @@ var graphics = {
 	"flipColor": true,
 }
 
-var images = Images.new()
+var images:Images = Images.new()
 
-var rotated_ship = []
+var rotated_ship:Array = []
 
 var enemy_palette:Array = images.enemy_palette
 var title_palette:Array = images.title_palette
@@ -138,6 +141,9 @@ var boss2_palette:Array = images.boss2_palette
 
 var trigmath
 
+func _init():
+	print("Bababooey")
+
 # the original Space Game uses a few different speeds (bullet, player, enemies)
 # but it didn't run at a reliable 60 fps (1/60 deltas)
 # 30 fps "felt" too slow, so let's go with 40 fps
@@ -145,28 +151,28 @@ var trigmath
 # this multiplier will modify all original game speeds to scale them back
 # to one that feels more like how it ran on console
 # it can be removed with password 60185
-var FPS_MULT = 40
+var FPS_MULT:int = 40
 
 #Some new global variables
 var playingOptions: bool
-var config = ConfigFile.new().load("user://settings.ini")
+var config:ConfigFile = ConfigFile.new()#.load("user://settings.ini")
 
 
 #Reset the game
-func reset():
+func reset() -> void:
 	button = 0
 	#Set flag to render reset screen;
 	renderResetFlag = 1
 
 #This might not be needed, the game now renders to a 427x240 subviewport that the
 #engine then scales up to the window size if it's larger than 240p
-func size_changed():
-	windowSize = get_viewport_rect().size
-	var width = 427
-	var height = 240
+func size_changed() -> void:
+	#windowSize = get_viewport_rect().size
+	var width:int = 427
+	var height:int = 240
 	SCALER = max(min(int(windowSize.x / width), int(windowSize.y / height)), 1)
 
-func initGameState():
+func initGameState() -> void:
 	pass
 #	# init enemies
 	for x in range(MAX_ENEMIES):
@@ -174,9 +180,9 @@ func initGameState():
 		enemies[x].angle = 3.14;
 		#makeRotationMatrix(0, 23, enemy, enemies[x].rotated_sprite, 9);
 
-func initBullets():
+func initBullets() -> void:
 	for x in range(BULLET_COUNT):
-		var bullet = {
+		var bullet:Dictionary = {
 			"x": 0,
 			"y": 0,
 			"m_x": 0,
@@ -185,7 +191,7 @@ func initBullets():
 		}
 		bullets.append(bullet)
 
-func increaseScore(inc):
+func increaseScore(inc) -> void:
 #	# count the number of 5000s that fit into the score before adding
 	var fiveThousandsBefore = score / 5000
 #	# increase the score
@@ -230,7 +236,7 @@ func increaseScore(inc):
 #	mySpaceGlobals["angle"] = 0
 #	mySpaceGlobals["frame"] = 0
 
-func SettingsCheck(directory: String):
+func SettingsCheck(directory: String) -> PlayerSettings:
 	if FileAccess.file_exists(directory):
 		return ResourceLoader.load(directory)
 	else:
