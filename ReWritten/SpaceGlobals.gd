@@ -9,7 +9,7 @@ var a:int = 0;
 
 var screenImage
 var screenTexture
-var editableScreen
+var editableScreen:Image
 
 var SCALER:Vector2i = Vector2i(1,1)
 var windowSize

@@ -4,7 +4,7 @@ extends LineEdit
 #both options and the game at runtime
 
 var config:ConfigFile = ConfigFile.new()
-const userfile: String = "user://settings.ini"
+const userfile:String = "user://settings.ini"
 # Dear Github Viewer,
 #		Well, here's where you see the passwords I guess!
 #		With the exception of a few hardcoded ones, the
@@ -12,7 +12,8 @@ const userfile: String = "user://settings.ini"
 #		a seeded random list from program.c
 # Enjoy!
 
-const EasterPasswords = {
+## Passwords to easter eggs
+const EasterPasswords:Dictionary = {
 	"00001": "https://t-tb.bandcamp.com/track/cruise",
 	"00002": "https://t-tb.bandcamp.com/track/scream-pictures",
 	"00003": "https://t-tb.bandcamp.com/track/slimers",
@@ -23,7 +24,8 @@ const EasterPasswords = {
 	"41666": "https://wiiu.hacks.guide"
 }
 
-const ExtrasPassword = {
+## Passwords that unlock things that aren't exactly "cheats"
+const ExtrasPassword:Dictionary = {
 	"82571": "noEnemies",
 	"30236": "Kamikaze",
 	"00000": "DefaultShip",
@@ -32,7 +34,8 @@ const ExtrasPassword = {
 	"77777": "RedBlueFlip",
 }
 
-const CheatPassword = {
+## Passwords to tradition cheats
+const CheatPassword:Dictionary = {
 	"55225": "Invincibility",
 	"24177": "DoubleShot",
 	"37124": "TripleShot",
@@ -84,8 +87,8 @@ func tryPassword(password:String) -> void:
 #		mySpaceGlobals.dontKeepTrackOfScore = 1;
 #		# rest in peace Etika
 #		OS.shell_open("https://www.youtube.com/watch?v=1qX75J4_-e8")
-##		mySpaceGlobals.playerChoice = 2;
-##		decompress_sprite(740, 36, 36, compressed_boss, orig_ship, 39);
+#		mySpaceGlobals.playerChoice = 2;
+#		decompress_sprite(740, 36, 36, compressed_boss, orig_ship, 39);
 #		mySpaceGlobals.curPalette = boss_palette;
 #		mySpaceGlobals.transIndex = 39;
 #		mySpaceGlobals.state = 7;

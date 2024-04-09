@@ -9,7 +9,7 @@ func _init(initialSeed:float = 0) -> void:
 	xseed = initialSeed
 	print("Initial seed is "+ String.num(initialSeed))
 
-func prand() -> void:
+func prand() -> float:
 	var next:float = xseed
 	var result:int
 	next *= 1103515245

@@ -1,32 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://wamq8rokwxtv"]
+[gd_scene load_steps=2 format=3 uid="uid://wamq8rokwxtv"]
 
-[ext_resource type="Script" path="res://ReWritten/Stars.gd" id="1_t5aah"]
-[ext_resource type="Texture2D" uid="uid://cjvrtq4byp852" path="res://starbackground.png" id="2_lpy2u"]
+[ext_resource type="Script" path="res://ReWritten/StarRendering.gd" id="3_po1nr"]
 
-[sub_resource type="Animation" id="Animation_5qmoo"]
-resource_name = "stars_anim"
-length = 6.0
-loop_mode = 1
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tro2l"]
-_data = {
-"stars_anim": SubResource("Animation_5qmoo")
-}
-
-[node name="Control" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_t5aah")
-imgbg = Color(0, 0, 0, 1)
-
-[node name="Stars" type="TextureRect" parent="."]
+[node name="Stars" type="TextureRect"]
 show_behind_parent = true
 visibility_layer = 512
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -34,9 +12,4 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("2_lpy2u")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_tro2l")
-}
+script = ExtResource("3_po1nr")

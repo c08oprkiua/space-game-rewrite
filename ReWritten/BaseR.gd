@@ -1,7 +1,7 @@
 extends Control
 
 @onready var config = ConfigFile.new()
-@onready var gameview = $"Gameview"
+@onready var gameview = $"SubViewportContainer/Gameview"
 @onready var Wiiuscreen = $"WiiUGamepad/Gameview"
 @onready var Switchscreen = $"SwitchTablet/Gameview"
 
@@ -13,7 +13,7 @@ func _ready():
 			print(Switchscreen.get_size())
 		gameview.get_texture()
 	Satellite.connect("state", Changestate)
-	
+
 func Changestate(state:int):
 	match state:
 		1:

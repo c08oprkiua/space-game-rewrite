@@ -1,6 +1,6 @@
 extends Node2D
 
-var laser = preload("res://Scenes/laser.tscn")
+const laser = preload("res://Scenes/laser.tscn")
 
 func _ready() -> void:
 	Satellite.connect("firelaser", firelaser)

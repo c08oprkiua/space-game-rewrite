@@ -133,5 +133,3 @@ func p1look() -> void:
 		var rotangl:float = Input.get_vector("left","right","up", "down").angle()
 		set_rotation_degrees(rad_to_deg(rotangl))
 		return
-
-

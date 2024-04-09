@@ -1,22 +1,33 @@
 extends Area2D
 
+class_name SGBullet
+
 func _ready() -> void:
 	set_scale(SpaceGlobals.SCALER)
 	hide()
 	Satellite.connect("laserinit", initBullets, 4)
 	Satellite.connect("firelaser", firelaser)
 
+static var BULLET_COUNT:int = 20
+static var bullets:Array[SGBullet] = []
+
+## Initializes the bullet pool.
+static func initBulletPool() -> void:
+	for x in range(BULLET_COUNT):
+		var bullet:SGBullet = SGBullet.new()
+		bullets.append(bullet)
+
 var arrayvalue
-var x: int
-var y: int
-var m_x: int
-var m_y: int
-var active: bool = false
+var x: int = 0
+var y: int = 0
+var m:Vector2i = Vector2i(0, 0)
+var active:bool = false
 
 #Self note: The bullet will store an integer. This is its number. 
 #This number shall be present in the BULLET_COUNT array, so that the game can 
 #Call the bullet to move if the item in the BULLET_COUNT matches the number
 
+##@depreciated
 func initBullets(array) -> void:
 	arrayvalue = array
 	for bullets in range(SpaceGlobals.BULLET_COUNT):
@@ -29,7 +40,7 @@ func initBullets(array) -> void:
 		}
 		SpaceGlobals.bullets.append(bullet)
 
-func firelaser(pos, rot) -> void:
+func firelaser(pos:Vector2, rot:float) -> void:
 	position = pos
 	rotation = rot
 
@@ -42,7 +53,6 @@ func RenderBullets() -> void:
 				for za in range(2):
 					#draw.drawPixel(SpaceGlobals.graphics, SpaceGlobals.bullets[x].x + z, SpaceGlobals.bullets[x].y + za, 255, 0, 0);
 					pass
-
 
 # moveBullets should be replaced with the bullets becoming nodes with hitboxes and velocity
 #	moveBullets(mySpaceGlobals);
