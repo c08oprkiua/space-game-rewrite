@@ -1,48 +1,38 @@
 extends VBoxContainer
 
-const settingsfile: String = "user://settings.ini"
-
 var sfxvol: int
 var musicvol: int
 
 #User-specific information here
-var CurPro: PlayerSettings #"CurrentProfile"
+var profile: PlayerSettings #"CurrentProfile"
 #General game settings in the setting.ini file
-var conf:ConfigFile = ConfigFile.new()
 
 func _ready():
-	conf.load(settingsfile)
-	var savefile:String = conf.get_value("General", "Last_used", "Player1.tres") #Should be Resource
-	CurPro = ResourceLoader.load(savefile) as PlayerSettings
+	DefaultSettings()
 
 #Determine which tabs to show based on what's written to the settings file, 
 #so that the user does not see what they don't have activated
 
 func DefaultSettings():
-	#Will set default values
-	pass
+	profile.loadSettings("settings")
+	profile.saveSettings()
 
-func WriteGeneral(name: String, value: Variant):
-	conf.set_value("General", name, value)
-
-func _on_sfx_vol_drag_ended(value_changed):
+func _on_sfx_vol_drag_ended(value_changed:bool) -> void:
 	if value_changed:
-		WriteGeneral("SFXVol", sfxvol)
+		profile.sfxVolume = sfxvol
 
-func _on_sfx_vol_value_changed(value):
+func _on_sfx_vol_value_changed(value:float) -> void:
 	sfxvol = int(value)
 
-func _on_music_vol_drag_ended(value_changed):
+func _on_music_vol_drag_ended(value_changed:bool) -> void:
 	if value_changed:
-		WriteGeneral("MusicVol", musicvol)
+		profile.musicVolume = musicvol
 
-func _on_music_vol_value_changed(value):
+func _on_music_vol_value_changed(value:float) -> void:
 	musicvol = int(value)
 
-
-func _on_load_pressed():
+func _on_load_pressed() -> void:
 	pass # Replace with function body.
 
-
-func _on_save_pressed():
-	pass # Replace with function body.
+func _on_save_pressed() -> void:
+	profile.saveSettings()

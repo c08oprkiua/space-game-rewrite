@@ -1,17 +1,21 @@
 extends Control
 
 @onready var config = ConfigFile.new()
-@onready var gameview = $"SubViewportContainer/Gameview"
-@onready var Wiiuscreen = $"WiiUGamepad/Gameview"
-@onready var Switchscreen = $"SwitchTablet/Gameview"
 
-func _ready():
+@onready var TitleScreen:Control = $"CenterContainer/SubViewportContainer/Gameview/TitleScreen"
+@onready var MainGameplay:Node2D = $"CenterContainer/SubViewportContainer/Gameview/MainGameplay"
+
+@onready var Wiiuscreen:TextureRect = $"WiiUGamepad/Gameview"
+@onready var Switchscreen:TextureRect = $"SwitchTablet/Gameview"
+@onready var FullScreen:TextureRect = $"FullScreen"
+
+func _ready() -> void:
 	config.load("user://settings.ini")
 	if config.has_section_key("Settings", "Frame"):
 		var screenchoice = config.get_value("Settings", "Frame")
 		if screenchoice == "Switch":
 			print(Switchscreen.get_size())
-		gameview.get_texture()
+		#gameview.get_texture()
 	Satellite.connect("state", Changestate)
 
 func _input(event: InputEvent) -> void:
@@ -19,9 +23,14 @@ func _input(event: InputEvent) -> void:
 
 func Changestate(state:int):
 	match state:
+		0: 
+			#Gameplay (this is a temp number until I can find the actual one)
+			TitleScreen.hide()
+			MainGameplay.show()
 		1:
 			#Title screen
-			pass
+			TitleScreen.show()
+			MainGameplay.hide() #TODO: Pause the gameplay when this happens
 		2:
 			#Password screen
 			pass

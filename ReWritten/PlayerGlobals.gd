@@ -44,14 +44,20 @@ var cheatsActive:bool = false
 @export var tripleShot: bool = false:
 	set(value):
 		tripleShot = value
+		if value:
+			cheatsActive = true
 		setCheat("tripleShot")
 @export var doubleShot: bool = false:
 	set(value):
 		doubleShot = value
+		if value:
+			cheatsActive = true
 		setCheat("doubleShot")
 @export var canEditSpeed: bool = false:
 	set(value):
 		canEditSpeed = value
+		if value:
+			cheatsActive = true
 		setCheat("canEditSpeed")
 @export var lives: int = 4
 @export var speed: int = 400
@@ -72,6 +78,13 @@ func setCheat(value:StringName) -> void:
 
 func setExtra(value:StringName) -> void:
 	conf.set_value("Extras", value, self.get(value))
+
+func loadSettings(name:StringName) -> void:
+	if FileAccess.file_exists(path.format(name)):
+		conf.load(path.format(name))
+	else:
+		profileName = name
+		saveSettings()
 
 func saveSettings() -> void:
 	conf.save(path.format(profileName))

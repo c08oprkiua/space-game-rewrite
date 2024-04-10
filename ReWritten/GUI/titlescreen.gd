@@ -11,13 +11,14 @@ extends VBoxContainer
 
 func _ready() -> void:
 	#Have some stuff in here about opening a thread and loading up the main scene in the background
-	if FileAccess.file_exists(SpaceGlobals.settings):
+	if SpaceGlobals.settings != null:
 		options.show()
 	anims.play("startup")
 	await anims.animation_finished
 	startgame.grab_focus()
 
 func _on_start_game_pressed() -> void:
+	Satellite.emit_signal("state", 0)
 	print("Start game")
 
 func _on_options_pressed() -> void:
@@ -27,22 +28,21 @@ func _on_password_toggled(button_pressed:bool) -> void:
 	if button_pressed:
 		anims.play("fade-title")
 		await anims.animation_finished
-		if FileAccess.file_exists(SpaceGlobals.settings):
+		if SpaceGlobals.settings != null:
 			options.hide()
 		logo.hide()
 		credits.hide()
 		startgame.hide()
 		passwordenter.show()
 	else:
-		if FileAccess.file_exists(SpaceGlobals.settings):
+		passwordenter.hide()
+		if SpaceGlobals.settings != null:
 			options.show()
 		logo.show()
 		credits.show()
 		startgame.show()
 		anims.play_backwards("fade-title")
 		await anims.animation_finished
-		passwordenter.hide()
-		
 
 func _on_space_game_pressed() -> void:
 	print("Original Godot 3 version by vgmoose. Godot 4 port and rewrite by c08oprkiua.")

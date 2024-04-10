@@ -31,7 +31,7 @@ func _ready() -> void:
 	set_scale(SpaceGlobals.SCALER)
 	hide()
 
-func moveEnemy():
+func moveEnemy() -> void:
 	if visible:
 		position.x += m.x * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
 		position.y += m.y * SpaceGlobals.FPS_MULT * SpaceGlobals.delta

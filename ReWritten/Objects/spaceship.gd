@@ -33,23 +33,30 @@ func _process(_delta:float) -> void:
 	rstick_y = Input.get_axis("shoot_up", "shoot_down")
 	lstick_y = Input.get_axis("up","down")
 	shootspeed = Input.get_action_strength("shoot")
+	
 	p1look()
 	p1Shoot()
 
-func _physics_process(_delta:float) -> void:
-	p1Move()
+func _physics_process(delta:float) -> void:
+	p1Move(delta)
+	#oldP1Move()
 
 func p1Shoot() -> void:
 	if (SpaceGlobals.playerExplodeFrame > 1):
 		return
-	if Input.is_action_pressed("shoot"):
-		#Satellite.emit_signal("firelaser", position, rotation, shootspeed)
-		Input.get_vector("left","right","up", "down")
-		#In the return of Input.get_vector, let (x, y) be the output
-		#As x approaches 1, the player moves left.
-		#As y approaches -1, the player moves up
-		#As x approaches -1, the player moves right
-		#As y aooraches 1, the player moves down
+	if shootspeed > 0:
+		var theta:float = rotation_degrees - PI
+		var bulletsShot:int = int(settings.doubleShot)
+		SpaceGlobals.firstShotFired = true
+		for bullet:Bullet in Bullet.bullets:
+			if not bullet.visible:
+				var offsetVector:Vector2 = Vector2()
+				offsetVector.x = int(SpaceGlobals.bulletsShot == 1) * 9 * cos(-theta) - int(bulletsShot == 2) * 9 * cos(-theta)
+				offsetVector.y = int(bulletsShot == 1) * 9 * sin(-theta) - int(bulletsShot == 2) * 9 * sin(-theta)
+				bulletsShot += 1
+				bullet.position = position + Vector2(18, 18) + offsetVector
+				bullet.m = Vector2(9, 9) * Vector2(sin(theta), cos(theta)) # 9 is the desired bullet speed
+				bullet.visible = true
 
 
 
@@ -72,7 +79,7 @@ func p1Shoot() -> void:
 #		var bulletsShot = int(SpaceGlobals.doubleShot)
 #		for xx in range(SpaceGlobals.BULLET_COUNT):
 #			if (SpaceGlobals.bullets[xx].active != 1):
-#				var offsetX = int(SpaceGlobals.bulletsShot==1)*9*cos(-theta) - int(bulletsShot==2)*9*cos(-theta)
+#				var offsetX = int(SpaceGlobals.bulletsShot == 1) * 9 * cos(-theta) - int(bulletsShot == 2) * 9 * cos(-theta)
 #				var offsetY = int(bulletsShot==1)*9*sin(-theta) - int(bulletsShot==2)*9*sin(-theta)
 #				bulletsShot += 1
 #				SpaceGlobals.bullets[xx].x = SpaceGlobals.p1X + 18 + offsetX;
@@ -86,35 +93,53 @@ func p1Shoot() -> void:
 #				if not SpaceGlobals.tripleShot or bulletsShot >= 3:
 #					break;
 
+## Updates player location
+func p1Move(delta:float) -> void:
+	#var playerMaxSpeed:float = 5 * SpaceGlobals.FPS_MULT * delta
+	var playerMaxSpeed:float = 5 * SpaceGlobals.FPS_MULT * delta * Performance.get_monitor(Performance.TIME_FPS)
+	var direction:Vector2 = Input.get_vector("left","right","up", "down")
+	if direction:
+		print(playerMaxSpeed)
+	velocity = direction * playerMaxSpeed
+	move_and_slide()
+
 #Updates player1 location
-func p1Move() -> void:
+func oldP1Move() -> void:
 	# can't move while exploding
 	if SpaceGlobals.playerExplodeFrame > 1:
 		return
-	var direction:Vector2 = Input.get_vector("left","right","up", "down")
-	#velocity = direction * settings.speed
-	#move_and_slide()
+	
+	var left_x:float = Input.get_axis("left", "right")
+	#var left_y:float = Input.get_axis("down", "up")
+	var left_y:float = Input.get_axis("up", "down")
+	
 	
 	# get the differences
-	var xdif:float #= left_x;
-	var ydif:float #= left_y;
+	var xdif:float = left_x
+	var ydif:float = left_y
 	
 	# don't update angle if both are within -.1 < x < .1
 	# (this is an expensive check... 128 bytes compared to just ==0)
-	#if ((xdif < 0.1) && (xdif > -0.1) && (ydif < 0.1) && (ydif > -0.1)): return;
+	if ((xdif < 0.1) && (xdif > -0.1) && (ydif < 0.1) && (ydif > -0.1)): return;
 	
-	
+	#This code may screw with analog movement/input
+	xdif = clampi(xdif, -1, 1)
+	ydif = clampi(ydif, -1, 1)
 	
 	# invalid view
 	SpaceGlobals.invalid = 1;
 	
 	# accept x and y movement from either stick
-	var playerMaxSpeed = 5 * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
-	SpaceGlobals.p1X += xdif * playerMaxSpeed;
-	SpaceGlobals.p1Y += ydif * playerMaxSpeed;
+	#var playerMaxSpeed = 5 * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
+	var playerMaxSpeed:float = 5 * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
+	#SpaceGlobals.p1X += xdif * playerMaxSpeed;
+	#SpaceGlobals.p1Y += ydif * playerMaxSpeed;
+	position.x += xdif * playerMaxSpeed
+	position.y += ydif * playerMaxSpeed
 	
 	# calculate angle to face
-	SpaceGlobals.angle = atan2(-ydif, xdif) - PI / 2.0;
+	#SpaceGlobals.angle = atan2(-ydif, xdif) - PI / 2.0;
+	set_rotation_degrees(atan2(-ydif, xdif) - PI / 2.0)
 	
 	# update score if on a frame divisible by 60 (gain ~10 points every second)
 	if (SpaceGlobals.frame % 60 == 0):
@@ -125,7 +150,8 @@ func p1Move() -> void:
 			SpaceGlobals.displayHowToPlay = 1;
 
 func p1look() -> void:
-	if shootspeed > 0:
+	if Input.is_action_just_pressed("shoot_mouse"):
+		shootspeed = 1
 		look_at(get_global_mouse_position())
 		return
 	if rstick_x != 0 or rstick_y != 0:

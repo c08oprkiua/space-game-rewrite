@@ -2,8 +2,12 @@ extends Node2D
 
 const laser:PackedScene = preload("res://Scenes/laser.tscn")
 
+func _ready() -> void:
+	for bullet in Bullet.bullets:
+		bullet = laser.instantiate()
+		add_child(bullet)
 
-func addNewEnemies():
+func addNewEnemies() -> void:
 	if (SpaceGlobals.noEnemies || SpaceGlobals.playerExplodeFrame > 1):
 		return;
 	# here we make a new enemy with a certain speed based on the level
@@ -24,13 +28,13 @@ func addNewEnemies():
 	randVal = trigmath.prand();
 	# horiz size
 	if (side < 2):
-#		startx = 0 if (side == 0) else xMaxBoundry;
-#		starty = randVal*yMaxBoundry;
+		startx = 0 if (side == 0) else SpaceGlobals.bounds.size.x;
+		starty = randVal * SpaceGlobals.bounds.size.y;
 		if (startx != 0):
 			theta -= PI;
 	else:
-#		starty = 20 if (side == 2) else yMaxBoundry;
-#		startx = randVal*xMaxBoundry;
+		starty = 20 if (side == 2) else SpaceGlobals.bounds.size.y;
+		startx = randVal * SpaceGlobals.bounds.size.x;
 		if (starty == 20):
 			theta -= PI / 2.0;
 		else:

@@ -90,7 +90,7 @@ script = ExtResource("4_x2gke")
 [node name="Spaceship" parent="Entities" instance=ExtResource("2_ahso2")]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(150, 130)
+position = Vector2(200, 100)
 
 [node name="Boundaries" type="Node2D" parent="."]
 

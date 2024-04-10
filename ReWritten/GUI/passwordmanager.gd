@@ -3,7 +3,6 @@ extends LineEdit
 #Change this to save changes to a userprofile file, which then can be read back by
 #both options and the game at runtime
 
-var config:ConfigFile = ConfigFile.new()
 # Dear Github Viewer,
 #		Well, here's where you see the passwords I guess!
 #		With the exception of a few hardcoded ones, the
@@ -36,23 +35,20 @@ const ExtrasPassword:Dictionary = {
 ## Passwords to tradition cheats
 const CheatPassword:Dictionary = {
 	"55225": "Invincibility",
-	"24177": "DoubleShot",
-	"37124": "TripleShot",
+	"24177": "doubleShot",
+	"37124": "tripleShot",
 	"60185": "SpeedHack",
 	"99499": "99lives",
 }
 
-func _ready() -> void:
-	config.load(SpaceGlobals.settings)
-
-func tryPassword(password:String) -> void:
+func tryPassword(password:StringName) -> void:
 	if EasterPasswords.has(password):
 		OS.shell_open(EasterPasswords.get(password))
 	elif ExtrasPassword.has(password):
-		config.set_value("Extras", ExtrasPassword.get(password), true)
+		SpaceGlobals.settings.set(ExtrasPassword.get(password), true)
 	elif CheatPassword.has(password):
-		config.set_value("Cheats", CheatPassword.get(password), true)
-	config.save(SpaceGlobals.settings)
+		SpaceGlobals.settings.set(CheatPassword.get(password), true)
+	SpaceGlobals.settings.saveSettings()
 
 #The following will instead be checked through the configfile at runtime
 

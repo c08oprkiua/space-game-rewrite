@@ -58,7 +58,9 @@ animations = [{
 "speed": 30.0
 }]
 
-[node name="Laser" type="Area2D"]
+[node name="Laser" type="RigidBody2D"]
+can_sleep = false
+lock_rotation = true
 script = ExtResource("1_kvud5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

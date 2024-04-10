@@ -3,6 +3,8 @@ class_name SpacGlob
 
 var seed:float = 4.20
 
+var settings:PlayerSettings = PlayerSettings.new()
+
 var player
 
 var a:int = 0;
