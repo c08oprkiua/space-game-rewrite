@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://r64nvcr8px2x"]
 
 [ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://Resources/uitheming.tres" id="1_papj1"]
+[ext_resource type="Script" path="res://ReWritten/GUI/PlayingUI.gd" id="2_8vlbx"]
 [ext_resource type="PackedScene" uid="uid://brinaxqcvgqky" path="res://Scenes/spaceship.tscn" id="2_ahso2"]
-[ext_resource type="Script" path="res://ReWritten/PlayingUI.gd" id="3_l26b7"]
 [ext_resource type="Script" path="res://ReWritten/PlayingField.gd" id="4_x2gke"]
 [ext_resource type="Shape2D" uid="uid://dgfaq25711jc2" path="res://Resources/GameplayBounds/TopBounds.tres" id="5_v8rj8"]
 [ext_resource type="Shape2D" uid="uid://dfne6w3at8geu" path="res://Resources/GameplayBounds/BottomBounds.tres" id="6_vdll0"]
@@ -25,7 +25,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_papj1")
-script = ExtResource("3_l26b7")
+script = ExtResource("2_8vlbx")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI"]
 layout_mode = 1

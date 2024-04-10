@@ -11,17 +11,17 @@ func _ready() -> void:
 	Satellite.connect("displayHowToPlay", nagtheplayer)
 	Satellite.connect("firelaser", nevermind)
 
-func renderTexts(mySpaceGlobals):
-#	draw.fillRect(mySpaceGlobals.graphics, 0, 0, xMaxBoundry, 20, 0, 0, 0);
+func renderTexts():
+#	draw.fillRect(SpaceGlobals.graphics, 0, 0, xMaxBoundry, 20, 0, 0, 0);
 	var score: String
-	if (mySpaceGlobals.dontKeepTrackOfScore == 1):
+	if (SpaceGlobals.dontKeepTrackOfScore == 1):
 		score = "Score: N/A"
 	else:
-		score = "Score: %09d" % mySpaceGlobals.score
+		score = "Score: %09d" % SpaceGlobals.score
 	dRaw.drawString(SpaceGlobals.graphics, 0, 0, score)
-	var level:String = "   Lv %d" % (mySpaceGlobals.level+1)
+	var level:String = "   Lv %d" % (SpaceGlobals.level+1)
 	dRaw.drawString(SpaceGlobals.graphics, 27, 0, level)
-	var lives:String = "   Lives: %d" % mySpaceGlobals.lives
+	var lives:String = "   Lives: %d" % SpaceGlobals.lives
 	dRaw.drawString(SpaceGlobals.graphics, 52, 0, lives)
 
 func nagtheplayer() -> void:

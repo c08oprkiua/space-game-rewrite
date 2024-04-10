@@ -2,8 +2,6 @@ extends Node2D
 
 class_name NewStar
 
-const bounds:Rect2i = Rect2i(0, 0, 427, 240)
-
 var color:Color = Color8(0, 0, 0, 255)
 
 var RNG:RandomNumberGenerator = RandomNumberGenerator.new()
@@ -19,8 +17,8 @@ func update() -> void:
 func update_position() -> void:
 	#position.x = int(trigmath.prand() * bounds.size.x)
 	#position.y = int(trigmath.prand() * bounds.size.y)
-	position.x = RNG.randi_range(0, bounds.size.x)
-	position.y = RNG.randi_range(0, bounds.size.y)
+	position.x = RNG.randi_range(0, SpaceGlobals.bounds.size.x)
+	position.y = RNG.randi_range(0, SpaceGlobals.bounds.size.y)
 
 func update_color() -> void:
 	var randomNum:int = RNG.randi_range(0, 5)

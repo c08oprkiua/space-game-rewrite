@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://d1rralxfclmkq"]
 
 [ext_resource type="Texture2D" uid="uid://bi3rah42xjnt4" path="res://Assets/Animations/Laser/laser_0001.png" id="1_7uv1p"]
-[ext_resource type="Script" path="res://ReWritten/Bullets.gd" id="1_kvud5"]
+[ext_resource type="Script" path="res://ReWritten/Objects/bullet.gd" id="1_kvud5"]
 [ext_resource type="Texture2D" uid="uid://bd6ky6n08axq4" path="res://Assets/Animations/Laser/laser_0002.png" id="2_l0mfr"]
 [ext_resource type="Texture2D" uid="uid://dbtc3226kkkqj" path="res://Assets/Animations/Laser/laser_0003.png" id="3_ggxyi"]
 [ext_resource type="Texture2D" uid="uid://c6qh7l3qaftyo" path="res://Assets/Animations/Laser/laser_0004.png" id="4_3ivbc"]

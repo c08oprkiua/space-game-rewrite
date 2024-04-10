@@ -6,19 +6,16 @@ extends VBoxContainer
 @onready var password:Button = $"Password"
 @onready var passwordenter:LineEdit = $"PassEnt" 
 @onready var options:Button = $"Options"
+@onready var anims:AnimationPlayer = $"AnimationPlayer"
 #	- Handling the menu at the title screen (doMenuAction)
 
 func _ready() -> void:
 	#Have some stuff in here about opening a thread and loading up the main scene in the background
-	startgame.grab_focus()
 	if FileAccess.file_exists("user://settings.ini"):
 		options.show()
-
-func _enter_tree() -> void:
-	$"AnimationPlayer".play("startup")
-
-func _unhandled_input(event):
-	print(event)
+	anims.play("startup")
+	await anims.animation_finished
+	startgame.grab_focus()
 
 func _on_start_game_pressed() -> void:
 	print("Start game")
@@ -30,11 +27,6 @@ func _on_password_toggled(button_pressed:bool):
 	var anim: Animation
 	if button_pressed:
 		$"AnimationPlayer".play("fade-title")
-#		logo.hide()
-#		startgame.hide()
-#		credits.hide()
-#		options.hide()
-#		passwordenter.show()
 	else:
 		logo.show()
 		startgame.show()

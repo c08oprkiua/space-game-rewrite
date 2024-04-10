@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b6d5ti0o70rw2"]
 
-[ext_resource type="Script" path="res://ReWritten/Options.gd" id="1_ym6eb"]
+[ext_resource type="Script" path="res://ReWritten/GUI/Options.gd" id="1_ym6eb"]
 
 [node name="ScrollContainer" type="VBoxContainer"]
 anchors_preset = 15
@@ -10,35 +10,31 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ym6eb")
 
-[node name="Tabs" type="TabBar" parent="."]
-visible = false
-layout_mode = 2
-tab_count = 3
-tab_alignment = 1
-tab_0/title = "General"
-tab_1/title = "Extras"
-tab_2/title = "Cheats"
-
 [node name="Scroller" type="ScrollContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="General" type="VBoxContainer" parent="Scroller"]
-visible = false
+[node name="TabContainer" type="TabContainer" parent="Scroller"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_alignment = 1
+
+[node name="General" type="VBoxContainer" parent="Scroller/TabContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="AudOpt" type="HBoxContainer" parent="Scroller/General"]
+[node name="AudOpt" type="HBoxContainer" parent="Scroller/TabContainer/General"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroller/General/AudOpt"]
+[node name="Label" type="Label" parent="Scroller/TabContainer/General/AudOpt"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Audio output:"
 
-[node name="Audio" type="OptionButton" parent="Scroller/General/AudOpt"]
+[node name="Audio" type="OptionButton" parent="Scroller/TabContainer/General/AudOpt"]
 layout_mode = 2
 size_flags_horizontal = 3
 item_count = 4
@@ -52,57 +48,65 @@ popup/item_2/id = 1
 popup/item_3/text = "All Audio Muted"
 popup/item_3/id = 2
 
-[node name="MusicVol" type="HBoxContainer" parent="Scroller/General"]
+[node name="MusicVol" type="HBoxContainer" parent="Scroller/TabContainer/General"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="Scroller/General/MusicVol"]
+[node name="Label2" type="Label" parent="Scroller/TabContainer/General/MusicVol"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Music volume:"
 
-[node name="MusicVol" type="HSlider" parent="Scroller/General/MusicVol"]
+[node name="MusicVol" type="HSlider" parent="Scroller/TabContainer/General/MusicVol"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="SFXVol" type="HBoxContainer" parent="Scroller/General"]
+[node name="SFXVol" type="HBoxContainer" parent="Scroller/TabContainer/General"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="Scroller/General/SFXVol"]
+[node name="Label3" type="Label" parent="Scroller/TabContainer/General/SFXVol"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Sound effects volume:"
 
-[node name="SFXVol" type="HSlider" parent="Scroller/General/SFXVol"]
+[node name="SFXVol" type="HSlider" parent="Scroller/TabContainer/General/SFXVol"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="Credits" type="Button" parent="Scroller/General"]
+[node name="Credits" type="Button" parent="Scroller/TabContainer/General"]
 layout_mode = 2
 text = "View Full Credits"
 
-[node name="Sauce" type="Button" parent="Scroller/General"]
+[node name="Sauce" type="Button" parent="Scroller/TabContainer/General"]
 layout_mode = 2
 text = "View source code on Github"
 
-[node name="Extras" type="VBoxContainer" parent="Scroller"]
+[node name="Extras" type="VBoxContainer" parent="Scroller/TabContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Peaceful" type="CheckButton" parent="Scroller/Extras"]
+[node name="Peaceful" type="CheckButton" parent="Scroller/TabContainer/Extras"]
 layout_mode = 2
 text = "No enemies:"
 
-[node name="Kamikaze" type="CheckButton" parent="Scroller/Extras"]
+[node name="Kamikaze" type="CheckButton" parent="Scroller/TabContainer/Extras"]
 layout_mode = 2
 text = "Kamikaze enemies:"
 
-[node name="ShipType" type="OptionButton" parent="Scroller/Extras"]
+[node name="Ship" type="HBoxContainer" parent="Scroller/TabContainer/Extras"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Scroller/TabContainer/Extras/Ship"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ship:"
+
+[node name="ShipType" type="OptionButton" parent="Scroller/TabContainer/Extras/Ship"]
 layout_mode = 2
 item_count = 3
 selected = 0
@@ -113,11 +117,19 @@ popup/item_1/id = 1
 popup/item_2/text = "Normal (Inverted)"
 popup/item_2/id = 2
 
-[node name="RBSwap" type="CheckButton" parent="Scroller/Extras"]
+[node name="RBSwap" type="CheckButton" parent="Scroller/TabContainer/Extras"]
 layout_mode = 2
 text = "Swap red and blue:"
 
-[node name="BorderType" type="OptionButton" parent="Scroller/Extras"]
+[node name="Border" type="HBoxContainer" parent="Scroller/TabContainer/Extras"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroller/TabContainer/Extras/Border"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Window border: "
+
+[node name="BorderType" type="OptionButton" parent="Scroller/TabContainer/Extras/Border"]
 layout_mode = 2
 item_count = 3
 selected = 0
@@ -128,37 +140,35 @@ popup/item_1/id = 1
 popup/item_2/text = "Switch Tablet"
 popup/item_2/id = 2
 
-[node name="Cheats" type="VBoxContainer" parent="Scroller"]
+[node name="Cheats" type="VBoxContainer" parent="Scroller/TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Invincibility" type="CheckButton" parent="Scroller/Cheats"]
+[node name="Invincibility" type="CheckButton" parent="Scroller/TabContainer/Cheats"]
 layout_mode = 2
 text = "Invincibility:
 "
 
-[node name="Triple Shot" type="CheckButton" parent="Scroller/Cheats"]
+[node name="Triple Shot" type="CheckButton" parent="Scroller/TabContainer/Cheats"]
 layout_mode = 2
 text = "Triple Shot:
 "
 
-[node name="Double Shot" type="CheckButton" parent="Scroller/Cheats"]
+[node name="Double Shot" type="CheckButton" parent="Scroller/TabContainer/Cheats"]
 layout_mode = 2
 text = "Double Shot:"
 
-[node name="Speed Hack" type="CheckButton" parent="Scroller/Cheats"]
+[node name="Speed Hack" type="CheckButton" parent="Scroller/TabContainer/Cheats"]
 layout_mode = 2
 text = "Changeable Move Speed:
 "
 
-[node name="99 Lives" type="CheckButton" parent="Scroller/Cheats"]
+[node name="99 Lives" type="CheckButton" parent="Scroller/TabContainer/Cheats"]
 layout_mode = 2
 text = "Start with 99 lives:
 "
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Scroller"]
-layout_mode = 2
 
 [node name="FileOptions" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -173,8 +183,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Save File"
 
-[connection signal="drag_ended" from="Scroller/General/MusicVol/MusicVol" to="." method="_on_music_vol_drag_ended"]
-[connection signal="value_changed" from="Scroller/General/MusicVol/MusicVol" to="." method="_on_music_vol_value_changed"]
-[connection signal="drag_ended" from="Scroller/General/SFXVol/SFXVol" to="." method="_on_sfx_vol_drag_ended"]
-[connection signal="value_changed" from="Scroller/General/SFXVol/SFXVol" to="." method="_on_sfx_vol_value_changed"]
+[connection signal="drag_ended" from="Scroller/TabContainer/General/MusicVol/MusicVol" to="." method="_on_music_vol_drag_ended"]
+[connection signal="value_changed" from="Scroller/TabContainer/General/MusicVol/MusicVol" to="." method="_on_music_vol_value_changed"]
+[connection signal="drag_ended" from="Scroller/TabContainer/General/SFXVol/SFXVol" to="." method="_on_sfx_vol_drag_ended"]
+[connection signal="value_changed" from="Scroller/TabContainer/General/SFXVol/SFXVol" to="." method="_on_sfx_vol_value_changed"]
 [connection signal="pressed" from="FileOptions/Load" to="." method="_on_load_pressed"]

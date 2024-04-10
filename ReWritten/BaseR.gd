@@ -14,6 +14,9 @@ func _ready():
 		gameview.get_texture()
 	Satellite.connect("state", Changestate)
 
+func _input(event: InputEvent) -> void:
+	print(event)
+
 func Changestate(state:int):
 	match state:
 		1:
@@ -39,9 +42,6 @@ const state = {
 	4: "game over screen",
 	-27: "for password inputs",
 }
-
-func _input(event):
-	pass
 
 # This class is a bit of a mess, but it basically does "everything else" in the game.
 # The most vareresting function is rotating the bitmap (makeRotationMatrix).
@@ -136,7 +136,7 @@ func blackout(g):
 	g.labelController.makeAllInvisible()
 	drawd.fillScreen(g, 0,0,0,1)
 
-func makeRotationMatrix(angle, width, original, target, transIndex):
+func makeRotationMatrix(angle, width:int, original, target, transIndex):
 	for x in range(width):
 		for y in range(width):
 			target[x][y] = transIndex;
@@ -145,17 +145,17 @@ func makeRotationMatrix(angle, width, original, target, transIndex):
 	for ix in range(width):
 		for iy in range(width):
 			# rotate the pixel by the angle varo a new spot in the rotation matrix
-			var oldx = int((ix-woffset)*cos(angle) + (iy-woffset)*sin(angle) + woffset);
-			var oldy = int((ix-woffset)*sin(angle) - (iy-woffset)*cos(angle) + woffset);
-
+			var oldx = int((ix - woffset) * cos(angle) + (iy - woffset) * sin(angle) + woffset);
+			var oldy = int((ix - woffset) * sin(angle) - (iy - woffset) * cos(angle) + woffset);
+			
 			if (oldx > width): oldx = width-1;
 			if (oldy > width): oldy = width-1;
-
+			
 #			if (original[oldx][oldy] == transIndex): continue;
-
+			
 			if (oldx < 0 || oldx >= width): continue;
 			if (oldy < 0 || oldy >= width): continue;
-
+			
 			# TODO: crashes with this below line! When trying to assign to target, but only after doing the above math
 			target[ix][iy] = original[oldx][oldy];
 
@@ -179,7 +179,7 @@ func render(mySpaceGlobals):
 		mySpaceGlobals.invalid = 0;
 
 # see the notes in images.c for more info on how this works
-func decompress_sprite(arraysize:int, width, height, input, target, transIndex):
+func decompress_sprite(arraysize:int, width:int, height:int, input, target, transIndex:int):
 	var cx:int = 0
 	var cy:int = 0;
 	var posinrow:int = 0;
@@ -246,13 +246,13 @@ func addNewEnemies(mySpaceGlobals):
 	var side = int(trigmath.prand()*4);
 #	# randomly decide to set starting angle right for the player
 #	var seekPlayer = trigmath.prand(mySpaceGlobals.seed)*2;
-	var difficulty = mySpaceGlobals.level/100.0;
+	var difficulty = mySpaceGlobals.level / 100.0;
 	var randVal = trigmath.prand();
 	# set the enemy count (max enemies on screen at once) based on level
-	var enemyCount = 10 + difficulty*90*randVal;
+	var enemyCount = 10 + difficulty * 90 * randVal;
 	if (enemyCount > 100): enemyCount = 100;
 	# set speed randomly within difficulty range
-	var speed = 3 + (difficulty)*12*randVal;
+	var speed = 3 + (difficulty) * 12 * randVal;
 	var startx
 	var starty
 	var theta = trigmath.prand()*PI;

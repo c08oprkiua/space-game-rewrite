@@ -2,13 +2,12 @@ extends TextureRect
 
 #	- Star draw.drawing (renderStars)
 
-const bounds:Rect2i = Rect2i(0, 0, 427, 240)
 const STAR_COUNT:int = 200
 
 var stars:Array[NewStar] = []
 var starimg:Image = Image.create(427,240, false, Image.FORMAT_RGB8)
 var flipColors:bool = false
-var animating:bool = false
+@export var animating:bool = true
 
 func _init() -> void:
 	initStars()
@@ -16,8 +15,14 @@ func _init() -> void:
 func _ready() -> void:
 	renderStars()
 
-#TODO: I want to make it so that every half a second, it moves a number of stars to a
+#TODO: I want to make it so that every second, it moves a number of stars to a
 # new position, creating a Galaga-like star "flickering" effect.
+
+func _process(delta: float) -> void:
+	if animating:
+		var seconds:int = Time.get_ticks_msec()
+		if seconds % 1000 == 0:
+			renderStars()
 
 func initStars() -> void:
 	for x:int in range(STAR_COUNT):
@@ -28,8 +33,9 @@ func initStars() -> void:
 func renderStars() -> void:
 	# don't draw.draw stars if the player is on their last life and died
 	#I'm going to change this so that this just pauses when the player dies
-#	if (SpaceGlobals.lives == 1 && SpaceGlobals.playerExplodeFrame > 1):
-#		return
+	if (SpaceGlobals.lives == 1 && SpaceGlobals.playerExplodeFrame > 1):
+		animating = false
+		return
 	drawPixels()
 
 func drawPixels() -> void:
@@ -43,7 +49,6 @@ func putAPixel(pos:Vector2i, col:Color) -> void:
 		col.r8 = col.b8
 		col.b8 = temp
 	
-	#if pos.x < 0 or pos.x >= 427 or pos.y < 0 or pos.y >= 240 or starimg == null:
-	if not bounds.has_point(pos) or starimg == null:
+	if not SpaceGlobals.bounds.has_point(pos) or starimg == null:
 		return
 	starimg.set_pixelv(pos, col)

@@ -210,10 +210,10 @@ func p1Move(mySpaceGlobals):
 	# don't update angle if both are within -.1 < x < .1
 	# (this is an expensive check... 128 bytes compared to just ==0)
 	if (xdif < 0.1 && xdif > -0.1 && ydif < 0.1 && ydif > -0.1): return;
-
+	
 	# invalid view
 	mySpaceGlobals.invalid = 1;
-
+	
 	# accept x and y movement from either stick
 	var playerMaxSpeed = 5 * FPS_MULT * mySpaceGlobals.delta
 	mySpaceGlobals.p1X += xdif * playerMaxSpeed;

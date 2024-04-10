@@ -50,18 +50,20 @@ func p1Shoot() -> void:
 		#As y approaches -1, the player moves up
 		#As x approaches -1, the player moves right
 		#As y aooraches 1, the player moves down
-		
+
+
+
 #	var xdif = 0;
 #	var ydif = 0;
-
+	
 #	xdif = SpaceGlobals.p1X - (SpaceGlobals.p1X + (rstick_x * 18));
 #	ydif = SpaceGlobals.p1Y - (SpaceGlobals.p1Y + (rstick_y * 18));
-
+	
 	# if no joysticks were touched, but a touch is present
 #	if (xdif == 0 && ydif == 0 && SpaceGlobals.touched):
 #		xdif = (SpaceGlobals.p1X - SpaceGlobals.touchX + 18);
 #		ydif = (SpaceGlobals.p1Y - SpaceGlobals.touchY + 18);
-
+		
 #	if (xdif != 0 && ydif != 0):
 #		SpaceGlobals.angle = atan2(xdif, ydif);
 		# shoot a bullet
@@ -90,33 +92,34 @@ func p1Move() -> void:
 	if SpaceGlobals.playerExplodeFrame > 1:
 		return
 	var direction:Vector2 = Input.get_vector("left","right","up", "down")
-	velocity = direction * settings.speed
-	move_and_slide()
-
+	#velocity = direction * settings.speed
+	#move_and_slide()
+	
 	# get the differences
-#	var xdif = left_x;
-#	var ydif = left_y;
-
+	var xdif:float #= left_x;
+	var ydif:float #= left_y;
+	
 	# don't update angle if both are within -.1 < x < .1
 	# (this is an expensive check... 128 bytes compared to just ==0)
-#	if (xdif < 0.1 && xdif > -0.1 && ydif < 0.1 && ydif > -0.1): return;
-
+	#if ((xdif < 0.1) && (xdif > -0.1) && (ydif < 0.1) && (ydif > -0.1)): return;
+	
+	
+	
 	# invalid view
-#	SpaceGlobals.invalid = 1;
-
+	SpaceGlobals.invalid = 1;
+	
 	# accept x and y movement from either stick
-	#var playerMaxSpeed = 5 * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
-#	SpaceGlobals.p1X += xdif * playerMaxSpeed;
-#	SpaceGlobals.p1Y += ydif * playerMaxSpeed;
-
+	var playerMaxSpeed = 5 * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
+	SpaceGlobals.p1X += xdif * playerMaxSpeed;
+	SpaceGlobals.p1Y += ydif * playerMaxSpeed;
+	
 	# calculate angle to face
-#	SpaceGlobals.angle = atan2(-ydif, xdif) - PI / 2.0;
-
+	SpaceGlobals.angle = atan2(-ydif, xdif) - PI / 2.0;
+	
 	# update score if on a frame divisible by 60 (gain ~10 points every second)
 	if (SpaceGlobals.frame % 60 == 0):
-#		SpaceGlobals.increaseScore(SpaceGlobals, 10);
 		SpaceGlobals.increaseScore(10);
-
+		
 		# if the score is at least 50 and a shot hasn't been fired yet, display a message about shooting
 		if (SpaceGlobals.score >= 50 && !SpaceGlobals.firstShotFired):
 			SpaceGlobals.displayHowToPlay = 1;
@@ -126,7 +129,7 @@ func p1look() -> void:
 		look_at(get_global_mouse_position())
 		return
 	if rstick_x != 0 or rstick_y != 0:
-		var lookrot:float = Input.get_vector("shoot_left","shoot_right","shoot_up", "shoot_down").angle()
+		var lookrot:float = Input.get_vector("shoot_left", "shoot_right", "shoot_up", "shoot_down").angle()
 		set_rotation_degrees(rad_to_deg(lookrot))
 		return
 	if lstick_x != 0 or lstick_y != 0:

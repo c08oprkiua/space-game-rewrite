@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://r3u24lwelpv0"]
 
-[ext_resource type="Script" path="res://Classic/Classic.gd" id="1"]
+[ext_resource type="Script" path="res://Classic/Classic.txt" id="1"]
 [ext_resource type="AudioStream" uid="uid://y6tkfgjgesad" path="res://Assets/cruise.mp3" id="2"]
-[ext_resource type="Texture2D" uid="uid://bu0dvj62r6mtk" path="res://Assets/gamepad.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://tqpf5dundxob" path="res://Assets/gamepad.png" id="3"]
 [ext_resource type="Script" path="res://Classic/LabelController.gd" id="4"]
 
 [node name="Node2D" type="Node2D"]

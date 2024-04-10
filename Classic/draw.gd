@@ -26,10 +26,10 @@ func drawString(g, xi, yi, string):
 		# a little bump for the top row never hurt anyone
 		yi = 5
 	var i = 0;
-	for nexts in string:
+	for nexts:String in string:
 		i += 1
-#		var next = nexts.unicode_at(0)
-		var next = ord(nexts)
+		var next:int = nexts.unicode_at(0)
+		#var next = ord(nexts)
 		# actually draw this char pixel by pixel, if it's within range
 		if (next >= 0 && next < 128):
 			var bitmap = font[next];

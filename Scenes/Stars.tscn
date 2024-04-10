@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://wamq8rokwxtv"]
 
-[ext_resource type="Script" path="res://ReWritten/StarRendering.gd" id="3_po1nr"]
+[ext_resource type="Script" path="res://ReWritten/GUI/StarRendering.gd" id="3_po1nr"]
 
 [node name="Stars" type="TextureRect"]
 show_behind_parent = true

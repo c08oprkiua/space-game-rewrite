@@ -35,17 +35,17 @@ var enemy = null
 var enemies
 var noEnemies:bool = false
 
-var xMinBoundry:int = 0
-var xMaxBoundry:int = 427
-var yMinBoundry:int = 0
-var yMaxBoundry:int = 240
+const bounds:Rect2i = Rect2i(0, 0, 427, 240)
+#var xMinBoundry:int = 0
+#var xMaxBoundry:int = 427
+#var yMinBoundry:int = 0
+#var yMaxBoundry:int = 240
 
 var rstick_x
 var rstick_y
 
-var MAX_ENEMIES:int = 100
-var BULLET_COUNT:int = 20
-var bullets:Array = []
+const MAX_ENEMIES:int = 100
+const BULLET_COUNT:int = 20
 
 var spedUpMusic
 var flipColor: int = 0
@@ -55,19 +55,21 @@ var restart:int = 1
 
 # initial state is title screen
 #The state variable has become a signal, and is compared to state the constant (dictionary)
-const state = {
+const state:Dictionary = {
 	1: "title screen",
 	2: "password screen",
 	3: "pause screen",
 	4: "game over screen",
 	-27: "for password inputs",
 }
+
 #Anything not in that dictionary is gameplay
 var titleScreenRefresh:int = 1
 
 # Flags for render states
 var renderResetFlag:int = 0
 var menuChoice:int = 0
+
 const menuChoiceDict:Dictionary = {
 	0: "play",
 	1: "password",
@@ -94,13 +96,16 @@ var title
 	#All input variables are entirely gone, because that can be natively handled in Godot through
 	#the various Input singletons
 
-#var curPalette = images.ship_palette
+
+
+var curPalette = Images.ship_palette
 var transIndex:int = 14
 var passwordEntered:int = 0
 var quit:int = 0
 #  initialize starfield for this game
 var invalid:int = 1
 
+#Touch vars are still here because I say so
 var touched
 var touchX
 var touchY
@@ -124,25 +129,24 @@ var graphics:Dictionary = {
 	"flipColor": true,
 }
 
-var images:Images = Images.new()
-
 var rotated_ship:Array = []
 
-var enemy_palette:Array = images.enemy_palette
-var title_palette:Array = images.title_palette
-var compressed_ship:Array = images.compressed_ship
-var compressed_ship2:Array = images.compressed_ship2
-var ship_palette:Array = images.ship_palette
-var ship2_palette:Array = images.ship2_palette
-var compressed_boss:Array = images.compressed_boss
-var boss_palette:Array = images.boss_palette
-var compressed_boss2:Array = images.compressed_boss2
-var boss2_palette:Array = images.boss2_palette
+var enemy_palette:Array = Images.enemy_palette
+var title_palette:Array = Images.title_palette
+var compressed_ship:Array = Images.compressed_ship
+var compressed_ship2:Array = Images.compressed_ship2
+var ship_palette:Array = Images.ship_palette
+var ship2_palette:Array = Images.ship2_palette
+var compressed_boss:Array = Images.compressed_boss
+var boss_palette:Array = Images.boss_palette
+var compressed_boss2:Array = Images.compressed_boss2
+var boss2_palette:Array = Images.boss2_palette
 
 var trigmath
+var delta:float
 
-func _init():
-	print("Bababooey")
+func _process(the_delta: float) -> void:
+	delta = the_delta
 
 # the original Space Game uses a few different speeds (bullet, player, enemies)
 # but it didn't run at a reliable 60 fps (1/60 deltas)
@@ -180,29 +184,51 @@ func initGameState() -> void:
 		enemies[x].angle = 3.14;
 		#makeRotationMatrix(0, 23, enemy, enemies[x].rotated_sprite, 9);
 
-func initBullets() -> void:
-	for x in range(BULLET_COUNT):
-		var bullet:Dictionary = {
-			"x": 0,
-			"y": 0,
-			"m_x": 0,
-			"m_y": 0,
-			"active": 0
-		}
-		bullets.append(bullet)
-
-func increaseScore(inc) -> void:
+func increaseScore(inc:int) -> void:
 #	# count the number of 5000s that fit into the score before adding
-	var fiveThousandsBefore = score / 5000
+	var fiveThousandsBefore:int = score / 5000 #float precision not needed for this math
 #	# increase the score
 	score += inc
 #	# count them again
-	var fiveThousandsAfter = score / 5000
+	var fiveThousandsAfter:int = score / 5000 #float precision not needed for this math
 #	# if it increased, levelup
 	if (fiveThousandsAfter > fiveThousandsBefore):
 		level += 1
 
 
+
+func decompressSpriteToImage(size:Vector2i, input:Array, transIndex:int, palette:Array[Color]) -> Array:
+	var target:Array[PackedByteArray] = []
+	var out_img:Image = Image.create(size.x, size.y, false, Image.FORMAT_RGBA8)
+	var cx:int = 0
+	var cy:int = 0
+	var posinrow:int = 0;
+	# go through input array
+	var x:int = 0
+	while x < input.size():
+		var count = input[x];
+		var value = input[x+1];
+		if (count == -120): # full value rows of last index in palette
+			for z in range(value):
+				for za in range(size.x):
+					target[cy+z][cx+za] = transIndex;
+			cy += value;
+			x += 2
+			continue;
+		if (count <= 0): # if it's negative, -count is value, and value is meaningless and advance by one
+			value = -1 * count;
+			count = 1;
+			x -= 1; # subtract one, so next time it goes up by 2, putting us at x+1
+		for z in range(count):
+			target[cy][cx] = value;
+			cx += 1;
+		posinrow += count
+		if (posinrow >= size.x):
+			posinrow = 0;
+			cx = 0;
+			cy+= 1;
+		x += 2
+	return target
 
 #	graphics["classicMain"] = self
 #	graphics["nxFont"] = false

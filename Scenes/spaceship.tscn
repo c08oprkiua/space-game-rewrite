@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://brinaxqcvgqky"]
 
-[ext_resource type="Script" path="res://ReWritten/spaceship.gd" id="1_2jl4r"]
+[ext_resource type="Script" path="res://ReWritten/Objects/spaceship.gd" id="1_g77ps"]
 [ext_resource type="Resource" uid="uid://buy2ad1uj7opa" path="res://P1.tres" id="2_kupm4"]
 [ext_resource type="Shape2D" uid="uid://bpowfhstr37vq" path="res://Resources/spaceshiphitbox.tres" id="3_73tgk"]
 [ext_resource type="Texture2D" uid="uid://dwxgawidjvw3i" path="res://Assets/Blueship.png" id="4_whgs1"]
@@ -8,7 +8,7 @@
 [node name="Spaceship" type="CharacterBody2D"]
 process_mode = 1
 motion_mode = 1
-script = ExtResource("1_2jl4r")
+script = ExtResource("1_g77ps")
 settings = ExtResource("2_kupm4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

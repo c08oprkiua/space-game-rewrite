@@ -1,49 +1,52 @@
 extends Node2D
 
-const laser = preload("res://Scenes/laser.tscn")
-
-func _ready() -> void:
-	Satellite.connect("firelaser", firelaser)
-	InitBullets()
+const laser:PackedScene = preload("res://Scenes/laser.tscn")
 
 
-var arrayvalue
-var x: int
-var y: int
-var m_x: int
-var m_y: int
-var active: bool = false
-
-func firelaser(pos, rot) -> void:
-	var newlaser = laser.instantiate()
+func addNewEnemies():
+	if (SpaceGlobals.noEnemies || SpaceGlobals.playerExplodeFrame > 1):
+		return;
+	# here we make a new enemy with a certain speed based on the level
+	# get a random position from one of the sides with a random var 0-3
+	var side = int(trigmath.prand()*4);
+#	# randomly decide to set starting angle right for the player
+#	var seekPlayer = trigmath.prand(mySpaceGlobals.seed)*2;
+	var difficulty = SpaceGlobals.level / 100.0;
+	var randVal = trigmath.prand();
+	# set the enemy count (max enemies on screen at once) based on level
+	var enemyCount = 10 + difficulty * 90 * randVal;
+	if (enemyCount > 100): enemyCount = 100;
+	# set speed randomly within difficulty range
+	var speed = 3 + (difficulty) * 12 * randVal;
+	var startx
+	var starty
+	var theta = trigmath.prand()*PI;
+	randVal = trigmath.prand();
+	# horiz size
+	if (side < 2):
+#		startx = 0 if (side == 0) else xMaxBoundry;
+#		starty = randVal*yMaxBoundry;
+		if (startx != 0):
+			theta -= PI;
+	else:
+#		starty = 20 if (side == 2) else yMaxBoundry;
+#		startx = randVal*xMaxBoundry;
+		if (starty == 20):
+			theta -= PI / 2.0;
+		else:
+			theta += PI / 2.0;
+	# seek directly to the player
+	if (SpaceGlobals.enemiesSeekPlayer == 1):
+		var xdif = startx + 11 - (SpaceGlobals.p1X + 18);
+		var ydif = starty + 11 - (SpaceGlobals.p1Y + 18);
+		theta = atan2(xdif, ydif) - PI;
 	
-	pass
-
-
-func InitBullets() -> void:
-	# init bullets
-	for bullets in SpaceGlobals.BULLET_COUNT:
-		add_child(laser.instantiate())
-		Satellite.emit_signal("laserinit", bullets)
-
-func initBullets(array) -> void:
-	arrayvalue = array
-	for x in range(SpaceGlobals.BULLET_COUNT):
-		var bullet:Dictionary = {
-			"x": 0,
-			"y": 0,
-			"m_x": 0,
-			"m_y": 0,
-			"active": 0
-		}
-		SpaceGlobals.bullets.append(bullet)
-
-func RenderBullets() -> void:
-	pass
-	# for all active bullets, advance them
-	for x in range(SpaceGlobals.BULLET_COUNT):
-		if (SpaceGlobals.bullets[x].active == 1):
-			for z in range(4):
-				for za in range(2):
-					#draw.drawPixel(SpaceGlobals.graphics, SpaceGlobals.bullets[x].x + z, SpaceGlobals.bullets[x].y + za, 255, 0, 0);
-					pass
+	for xx in range(enemyCount):
+		var enemy:Enemy = Enemy.enemies[xx]
+		if (enemy.active):
+			enemy.position.x = startx;
+			enemy.position.y = starty;
+			enemy.m.x = speed * sin(theta); # speed is the desired enemy speed
+			enemy.m.y = speed * cos(theta); # we have to solve for the hypotenuese
+			enemy.active = true;
+			break;
