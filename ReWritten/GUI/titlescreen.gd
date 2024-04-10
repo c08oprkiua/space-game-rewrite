@@ -11,7 +11,7 @@ extends VBoxContainer
 
 func _ready() -> void:
 	#Have some stuff in here about opening a thread and loading up the main scene in the background
-	if FileAccess.file_exists("user://settings.ini"):
+	if FileAccess.file_exists(SpaceGlobals.settings):
 		options.show()
 	anims.play("startup")
 	await anims.animation_finished
@@ -23,21 +23,29 @@ func _on_start_game_pressed() -> void:
 func _on_options_pressed() -> void:
 	pass # Replace with function body.
 
-func _on_password_toggled(button_pressed:bool):
-	var anim: Animation
+func _on_password_toggled(button_pressed:bool) -> void:
 	if button_pressed:
-		$"AnimationPlayer".play("fade-title")
+		anims.play("fade-title")
+		await anims.animation_finished
+		if FileAccess.file_exists(SpaceGlobals.settings):
+			options.hide()
+		logo.hide()
+		credits.hide()
+		startgame.hide()
+		passwordenter.show()
 	else:
-		logo.show()
-		startgame.show()
-		credits.show()
-		if FileAccess.file_exists("user://settings.ini"):
+		if FileAccess.file_exists(SpaceGlobals.settings):
 			options.show()
+		logo.show()
+		credits.show()
+		startgame.show()
+		anims.play_backwards("fade-title")
+		await anims.animation_finished
 		passwordenter.hide()
+		
 
 func _on_space_game_pressed() -> void:
-	print("Original Godot 3 version by vgmoose. Godot 4 port and optimization by c08oprkiua")
-
+	print("Original Godot 3 version by vgmoose. Godot 4 port and rewrite by c08oprkiua.")
 
 #the following is just reference code from the OG SpaceGame
 
@@ -123,17 +131,4 @@ func doMenuAction(mySpaceGlobals):
 		mySpaceGlobals.menuChoice = 0;
 		mySpaceGlobals.invalid = 1;
 
-func Focuschangecheck():
-	pass
 
-
-func _on_password_focus_entered() -> void:
-	password.text = ">> Password <<"
-
-
-func _on_options_focus_entered() -> void:
-	pass # Replace with function body.
-
-
-func _on_start_game_focus_entered() -> void:
-	pass # Replace with function body.

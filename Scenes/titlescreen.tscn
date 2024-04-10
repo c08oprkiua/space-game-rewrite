@@ -90,21 +90,21 @@ layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_5lwpv")
 
-[node name="SpaceGame" type="TextureButton" parent="CenterContainer/MainMenu"]
+[node name="SpaceGame" type="TextureButton" parent="CenterContainer/MainMenu" groups=["TitleScreen"]]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 action_mode = 0
 texture_normal = ExtResource("3_46dme")
 
-[node name="Credits" type="Label" parent="CenterContainer/MainMenu"]
+[node name="Credits" type="Label" parent="CenterContainer/MainMenu" groups=["TitleScreen"]]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
 text = "by vgmoose"
 horizontal_alignment = 2
 
-[node name="StartGame" type="Button" parent="CenterContainer/MainMenu"]
+[node name="StartGame" type="Button" parent="CenterContainer/MainMenu" groups=["TitleScreen"]]
 layout_mode = 2
 size_flags_vertical = 0
 action_mode = 0
@@ -163,10 +163,7 @@ size_flags_vertical = 8
 text = "MIT License"
 
 [connection signal="pressed" from="CenterContainer/MainMenu/SpaceGame" to="CenterContainer/MainMenu" method="_on_space_game_pressed"]
-[connection signal="focus_entered" from="CenterContainer/MainMenu/StartGame" to="CenterContainer/MainMenu" method="_on_start_game_focus_entered"]
 [connection signal="pressed" from="CenterContainer/MainMenu/StartGame" to="CenterContainer/MainMenu" method="_on_start_game_pressed"]
-[connection signal="focus_entered" from="CenterContainer/MainMenu/Options" to="CenterContainer/MainMenu" method="_on_options_focus_entered"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Options" to="CenterContainer/MainMenu" method="_on_options_pressed"]
-[connection signal="focus_entered" from="CenterContainer/MainMenu/Password" to="CenterContainer/MainMenu" method="_on_password_focus_entered"]
 [connection signal="toggled" from="CenterContainer/MainMenu/Password" to="CenterContainer/MainMenu" method="_on_password_toggled"]
 [connection signal="text_submitted" from="CenterContainer/MainMenu/PassEnt" to="CenterContainer/MainMenu/PassEnt" method="tryPassword"]

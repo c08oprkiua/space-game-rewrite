@@ -31,7 +31,7 @@ buses/default_bus_layout="res://AudioBusLayout.tres"
 [autoload]
 
 trigmath="*res://Classic/trigmath.gd"
-SpaceGlobals="*res://ReWritten/SpaceGlobals.gd"
+SpaceGlobals="*res://ReWritten/Singletons/SpaceGlobals.gd"
 Satellite="*res://ReWritten/Satellite.gd"
 
 [debug]

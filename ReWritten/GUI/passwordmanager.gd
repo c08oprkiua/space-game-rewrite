@@ -4,7 +4,6 @@ extends LineEdit
 #both options and the game at runtime
 
 var config:ConfigFile = ConfigFile.new()
-const userfile:String = "user://settings.ini"
 # Dear Github Viewer,
 #		Well, here's where you see the passwords I guess!
 #		With the exception of a few hardcoded ones, the
@@ -44,7 +43,7 @@ const CheatPassword:Dictionary = {
 }
 
 func _ready() -> void:
-	config.load(userfile)
+	config.load(SpaceGlobals.settings)
 
 func tryPassword(password:String) -> void:
 	if EasterPasswords.has(password):
@@ -53,7 +52,7 @@ func tryPassword(password:String) -> void:
 		config.set_value("Extras", ExtrasPassword.get(password), true)
 	elif CheatPassword.has(password):
 		config.set_value("Cheats", CheatPassword.get(password), true)
-	config.save(userfile)
+	config.save(SpaceGlobals.settings)
 
 #The following will instead be checked through the configfile at runtime
 

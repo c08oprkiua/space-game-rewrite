@@ -1,9 +1,5 @@
 extends VBoxContainer
 
-@onready var General = $"Scroller/General"
-@onready var Cheats = $"Scroller/Cheats"
-@onready var Extras = $"Scroller/Extras"
-
 const settingsfile: String = "user://settings.ini"
 
 var sfxvol: int
@@ -12,7 +8,7 @@ var musicvol: int
 #User-specific information here
 var CurPro: PlayerSettings #"CurrentProfile"
 #General game settings in the setting.ini file
-var conf = ConfigFile.new()
+var conf:ConfigFile = ConfigFile.new()
 
 func _ready():
 	conf.load(settingsfile)
