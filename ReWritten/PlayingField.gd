@@ -1,10 +1,7 @@
 extends Node2D
 
-const laser:PackedScene = preload("res://Scenes/laser.tscn")
-
 func _ready() -> void:
-	for bullet in Bullet.bullets:
-		bullet = laser.instantiate()
+	for bullet:Bullet in Bullet.pool:
 		add_child(bullet)
 
 func addNewEnemies() -> void:

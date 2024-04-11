@@ -1,0 +1,80 @@
+[gd_scene load_steps=14 format=3 uid="uid://d1rralxfclmkq"]
+
+[ext_resource type="Script" path="res://ReWritten/Objects/bullet.gd" id="1_fq6xy"]
+[ext_resource type="Texture2D" uid="uid://bi3rah42xjnt4" path="res://Assets/Animations/Laser/laser_0001.png" id="2_1rk52"]
+[ext_resource type="Texture2D" uid="uid://bd6ky6n08axq4" path="res://Assets/Animations/Laser/laser_0002.png" id="3_jvgfm"]
+[ext_resource type="Texture2D" uid="uid://dbtc3226kkkqj" path="res://Assets/Animations/Laser/laser_0003.png" id="4_flqwc"]
+[ext_resource type="Texture2D" uid="uid://c6qh7l3qaftyo" path="res://Assets/Animations/Laser/laser_0004.png" id="5_rymkc"]
+[ext_resource type="Texture2D" uid="uid://c315wndi0wgv1" path="res://Assets/Animations/Laser/laser_0005.png" id="6_wu5iw"]
+[ext_resource type="Texture2D" uid="uid://bfovmjbhw47w0" path="res://Assets/Animations/Laser/laser_0006.png" id="7_yppm4"]
+[ext_resource type="Texture2D" uid="uid://oksfrkhdq4uf" path="res://Assets/Animations/Laser/laser_0007.png" id="8_ghyx2"]
+[ext_resource type="Texture2D" uid="uid://p3nblaxeas8i" path="res://Assets/Animations/Laser/laser_0008.png" id="9_v1ce2"]
+[ext_resource type="Texture2D" uid="uid://0glhha7xvgtt" path="res://Assets/Animations/Laser/laser_0009.png" id="10_67vr1"]
+[ext_resource type="Texture2D" uid="uid://dp5jcl6ournx1" path="res://Assets/Animations/Laser/laser_0010.png" id="11_c7krl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hhwbc"]
+size = Vector2(8, 2)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ghomd"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1rk52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jvgfm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_flqwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rymkc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wu5iw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yppm4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ghyx2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_v1ce2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_67vr1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_c7krl")
+}],
+"loop": true,
+"name": &"laseranim",
+"speed": 60.0
+}]
+
+[node name="Laser" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 2
+gravity_scale = 0.0
+can_sleep = false
+lock_rotation = true
+script = ExtResource("1_fq6xy")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hhwbc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ghomd")
+animation = &"laseranim"
+frame_progress = 0.967078
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Collision2" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_hhwbc")
