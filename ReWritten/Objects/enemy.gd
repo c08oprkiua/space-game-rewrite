@@ -23,22 +23,32 @@ var m:Vector2i
 
 func _ready() -> void:
 	set_scale(SpaceGlobals.SCALER)
-	hide()
+	disable()
 	texture.texture = sprite
 
 func _process(_delta: float) -> void:
 	moveEnemy()
 
+func enable() -> void:
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	set_process(true)
+	show()
+
+func disable() -> void:
+	hide()
+	process_mode = Node.PROCESS_MODE_DISABLED
+	set_process(false)
+
 func moveEnemy() -> void:
-	if visible:
-		position.x += m.x * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
-		position.y += m.y * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
-		if not SpaceGlobals.bounds.has_point(position):
-			visible = false
+	position.x += m.x * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
+	position.y += m.y * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
+	if not SpaceGlobals.bounds.has_point(position):
+		disable()
 	#Note: the following may be broken due to Godot natively using radians?
-		rotation += 0.02 * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
-		if (rotation > 6.28318530):
-			rotation = 0.0
-		# TODO: the below crashes... with angle instead of 0
-#		makeRotationMatrix(mySpaceGlobals.enemies[x].angle, 23, mySpaceGlobals.enemy, mySpaceGlobals.enemies[x].rotated_sprite, 9);
-#		mySpaceGlobals.invalid = 1;
+	rotation += 0.02 * SpaceGlobals.FPS_MULT * SpaceGlobals.delta
+	#if (rotation > 6.28318530):
+	#	rotation = 0.0
+	
+	# TODO: the below crashes... with angle instead of 0
+#	makeRotationMatrix(mySpaceGlobals.enemies[x].angle, 23, mySpaceGlobals.enemy, mySpaceGlobals.enemies[x].rotated_sprite, 9);
+#	mySpaceGlobals.invalid = 1;

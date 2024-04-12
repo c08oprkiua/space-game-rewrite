@@ -22,16 +22,25 @@ var m:Vector2i = Vector2i(0, 0)
 
 func _ready() -> void:
 	set_scale(SpaceGlobals.SCALER)
-	hide()
+	disable()
 
 func _process(delta: float) -> void:
 	moveBullet(delta)
 
+func enable() -> void:
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	set_process(true)
+	show()
+
+func disable() -> void:
+	hide()
+	process_mode = Node.PROCESS_MODE_DISABLED
+	set_process(false)
+
 ## Applies movement to a bullet
 ## Also will automatically hide the bullet if it is out of bounds
 func moveBullet(delta:float) -> void:
-	if visible:
-		var motion:Vector2 = m * SpaceGlobals.FPS_MULT * delta * Performance.get_monitor(Performance.TIME_FPS)
-		move_and_collide(m)
-		if not SpaceGlobals.bounds.has_point(position):
-			visible = false
+	var motion:Vector2 = m * SpaceGlobals.FPS_MULT * delta * Performance.get_monitor(Performance.TIME_FPS)
+	move_and_collide(m)
+	if not SpaceGlobals.bounds.has_point(position):
+		disable()

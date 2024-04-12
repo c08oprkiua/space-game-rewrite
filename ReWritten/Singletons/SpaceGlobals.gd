@@ -1,6 +1,24 @@
 extends Node
 class_name SpacGlob
 
+const bounds:Rect2i = Rect2i(0, 0, 427, 240)
+
+const MAX_ENEMIES:int = 100
+const BULLET_COUNT:int = 20
+
+# initial state is title screen
+#The state variable has become a signal, which triggers changeState in BaseR.gd
+enum GameState {
+	GAMEPLAY = 0,
+	TITLE_SCREEN = 1,
+	PASSWORD_SCREEN = 2,
+	PAUSE_SCREEN = 3,
+	GAME_OVER_SCREEN = 4,
+	PASSWORD_INPUT = -27,
+}
+
+var state:GameState
+
 var seed:float = 4.20
 
 var settings:PlayerSettings = PlayerSettings.new()
@@ -9,64 +27,20 @@ var player
 
 var a:int = 0;
 
-var screenImage
-var screenTexture
-var editableScreen:Image
-
 var SCALER:Vector2i = Vector2i(1,1)
 var windowSize
-var gamepad
-
-var initialized:bool = false
-
-var labelController
-
-var gamepadTexture
-var tabletTexture
 
 var startedMusic = false
 
-var playerChoice: int = 0
-var playerChoiceDict = {
-	
-	
-}
 var playerExplodeFrame: int = 0
 
-var enemy = null
-var enemies
 var noEnemies:bool = false
-
-const bounds:Rect2i = Rect2i(0, 0, 427, 240)
-#var xMinBoundry:int = 0
-#var xMaxBoundry:int = 427
-#var yMinBoundry:int = 0
-#var yMaxBoundry:int = 240
-
-var rstick_x
-var rstick_y
-
-const MAX_ENEMIES:int = 100
-const BULLET_COUNT:int = 20
 
 var spedUpMusic
 var flipColor: int = 0
 
 # Flag for restarting the entire game.
 var restart:int = 1
-
-# initial state is title screen
-#The state variable has become a signal, and is compared to state the constant (dictionary)
-const state:Dictionary = {
-	1: "title screen",
-	2: "password screen",
-	3: "pause screen",
-	4: "game over screen",
-	-27: "for password inputs",
-}
-
-#Anything not in that dictionary is gameplay
-var titleScreenRefresh:int = 1
 
 # Flags for render states
 var renderResetFlag:int = 0
@@ -79,8 +53,10 @@ const menuChoiceDict:Dictionary = {
 
 var lives: int = 4
 
-var p1X: int = 0
-var p1Y: int = 0
+var ship_positions:Array[Vector2i] = []
+#var p1X: int = 0
+#var p1Y: int = 0
+
 var angle: int = 0
 var frame: int = 0
 
@@ -89,18 +65,19 @@ var frame: int = 0
 	# them configurable per-player just makes sense imho
 var tripleShot:bool = false
 var doubleShot:bool = false
-var orig_ship
+
+
 
 	#Moved to the password manager script, which entirely manages all passwords in the game for the 
 	#sake of that code not bloating up a different script
 var passwordList:Array = []
-var title 
+
 	#All input variables are entirely gone, because that can be natively handled in Godot through
 	#the various Input singletons
 
 
 
-var curPalette = Images.ship_palette
+var curPalette:Array[Color] = Images.ship_palette
 var transIndex:int = 14
 var passwordEntered:int = 0
 var quit:int = 0
@@ -108,7 +85,7 @@ var quit:int = 0
 var invalid:int = 1
 
 #Touch vars are still here because I say so
-var touched
+var touched:bool 
 var touchX
 var touchY
 
@@ -133,19 +110,11 @@ var graphics:Dictionary = {
 
 var rotated_ship:Array = []
 
-var enemy_palette:Array = Images.enemy_palette
-var title_palette:Array = Images.title_palette
-var compressed_ship:Array = Images.compressed_ship
-var compressed_ship2:Array = Images.compressed_ship2
-var ship_palette:Array = Images.ship_palette
-var ship2_palette:Array = Images.ship2_palette
-var compressed_boss:Array = Images.compressed_boss
-var boss_palette:Array = Images.boss_palette
-var compressed_boss2:Array = Images.compressed_boss2
-var boss2_palette:Array = Images.boss2_palette
-
 var trigmath
 var delta:float
+
+func _init() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(the_delta: float) -> void:
 	delta = the_delta
@@ -160,7 +129,6 @@ func _process(the_delta: float) -> void:
 var FPS_MULT:int = 40
 
 #Some new global variables
-var playingOptions: bool
 var config:ConfigFile = ConfigFile.new()#.load("user://settings.ini")
 
 
@@ -170,21 +138,12 @@ func reset() -> void:
 	#Set flag to render reset screen;
 	renderResetFlag = 1
 
-#This might not be needed, the game now renders to a 427x240 subviewport that the
-#engine then scales up to the window size if it's larger than 240p
+#This is needed to properly scale the game w
 func size_changed() -> void:
 	#windowSize = get_viewport_rect().size
 	var width:int = 427
 	var height:int = 240
 	SCALER = max(min(int(windowSize.x / width), int(windowSize.y / height)), 1)
-
-func initGameState() -> void:
-	pass
-#	# init enemies
-	for x in range(MAX_ENEMIES):
-		enemies[x].position.active = 0;
-		enemies[x].angle = 3.14;
-		#makeRotationMatrix(0, 23, enemy, enemies[x].rotated_sprite, 9);
 
 func increaseScore(inc:int) -> void:
 #	# count the number of 5000s that fit into the score before adding

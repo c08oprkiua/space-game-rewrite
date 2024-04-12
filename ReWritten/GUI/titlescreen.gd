@@ -11,6 +11,11 @@ extends VBoxContainer
 
 func _ready() -> void:
 	#Have some stuff in here about opening a thread and loading up the main scene in the background
+	showSequence()
+
+
+
+func showSequence() -> void:
 	if SpaceGlobals.settings != null:
 		options.show()
 	anims.play("startup")
@@ -18,7 +23,8 @@ func _ready() -> void:
 	startgame.grab_focus()
 
 func _on_start_game_pressed() -> void:
-	Satellite.emit_signal("state", 0)
+	Satellite.emit_signal("state", SpaceGlobals.GameState.GAMEPLAY)
+	#Something something reset gameplay state
 	print("Start game")
 
 func _on_options_pressed() -> void:
@@ -46,6 +52,12 @@ func _on_password_toggled(button_pressed:bool) -> void:
 
 func _on_space_game_pressed() -> void:
 	print("Original Godot 3 version by vgmoose. Godot 4 port and rewrite by c08oprkiua.")
+
+
+func _on_title_screen_visibility_changed() -> void:
+	if SpaceGlobals.state == SpaceGlobals.GameState.TITLE_SCREEN:
+		showSequence()
+
 
 #the following is just reference code from the OG SpaceGame
 
@@ -130,5 +142,3 @@ func doMenuAction(mySpaceGlobals):
 	if (mySpaceGlobals.buttonUP || stickY < -0.3):
 		mySpaceGlobals.menuChoice = 0;
 		mySpaceGlobals.invalid = 1;
-
-

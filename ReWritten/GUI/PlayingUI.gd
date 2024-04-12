@@ -1,42 +1,52 @@
 extends Control
 
-@onready var Level:Label = $"MarginContainer/Level"
-@onready var Score:Label = $"MarginContainer/Score"
-@onready var Lives:Label = $"MarginContainer/Lives"
+class_name SpaceGameHUD
 
-var dRaw
+@onready var Level:Label = $"HUD/Level"
+@onready var Score:Label = $"HUD/Score"
+@onready var Lives:Label = $"HUD/Lives"
+
+@onready var menus:CenterContainer = $"Menus"
+@onready var pauseScreen:VBoxContainer = $"Menus/Pause"
+@onready var gameOverScreen:VBoxContainer = $"Menus/GameOver"
+
 
 func _ready() -> void:
 	Satellite.connect("lives", updatelives)
-	Satellite.connect("displayHowToPlay", nagtheplayer)
-	Satellite.connect("firelaser", nevermind)
+	Satellite.connect("displayHowToPlay", nagThePlayer)
 
-func renderTexts():
-#	draw.fillRect(SpaceGlobals.graphics, 0, 0, xMaxBoundry, 20, 0, 0, 0);
-	var score: String
+func displayPauseScreen() -> void:
+	gameOverScreen.hide()
+	pauseScreen.show()
+	$"Menus/Pause/Resume".grab_focus()
+
+func displayGameOver() -> void:
+	pauseScreen.hide()
+	gameOverScreen.show()
+	$"Menus/Pause/Retry".grab_focus()
+
+func nagThePlayer() -> void:
+	var nag: String = "Rapid fire with RT or left on mouse!"
+	#dRaw.drawString(SpaceGlobals.graphics, 17, 17, nag)
+
+func updatelives(count:int) -> void:
+	Lives.text = ("Lives: "+ String.num(count))
+
+func updatescore(count:int) -> void:
 	if (SpaceGlobals.dontKeepTrackOfScore == 1):
-		score = "Score: N/A"
+		Score.text = "Score: N/A"
 	else:
-		score = "Score: %09d" % SpaceGlobals.score
-	dRaw.drawString(SpaceGlobals.graphics, 0, 0, score)
-	var level:String = "   Lv %d" % (SpaceGlobals.level+1)
-	dRaw.drawString(SpaceGlobals.graphics, 27, 0, level)
-	var lives:String = "   Lives: %d" % SpaceGlobals.lives
-	dRaw.drawString(SpaceGlobals.graphics, 52, 0, lives)
+		Score.text = ("Score: "+ String.num(count))
 
-func nagtheplayer() -> void:
-	var nag: String = "Rapid fire with right stick or touch!"
-	dRaw.drawString(SpaceGlobals.graphics, 17, 17, nag)
+func updatelevel(count:int) -> void:
+	Level.text = ("Lv: "+ String.num(count))
 
-func nevermind(_position, _rotation) -> void:
-	Satellite.disconnect("displayHowToPlay", nagtheplayer)
-	Satellite.disconnect("firelaser", nevermind)
+func _on_quit_pressed() -> void:
+	Satellite.emit_signal("state", SpaceGlobals.GameState.TITLE_SCREEN)
 
-func updatelives(count) -> void:
-	Lives.text = ("Lives: "+ count)
+func _on_resume_pressed() -> void:
+	Satellite.emit_signal("state", SpaceGlobals.GameState.GAMEPLAY)
 
-func updatescore(count) -> void:
-	Score.text = ("Score: "+ count)
-
-func updatelevel(count) -> void:
-	Level.text = ("Level: "+ count)
+func _on_retry_pressed() -> void:
+	#*mumble mumble* reset flag
+	Satellite.emit_signal("state", SpaceGlobals.GameState.GAMEPLAY)

@@ -1,0 +1,89 @@
+[gd_scene load_steps=3 format=3 uid="uid://tq7mcm5eoyr8"]
+
+[ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://Resources/uitheming.tres" id="1_10rls"]
+[ext_resource type="Script" path="res://ReWritten/GUI/PlayingUI.gd" id="2_tuk7j"]
+
+[node name="UI" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_10rls")
+script = ExtResource("2_tuk7j")
+
+[node name="HUD" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 0
+
+[node name="Score" type="Label" parent="HUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Score:"
+
+[node name="Level" type="Label" parent="HUD"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Level"
+horizontal_alignment = 1
+
+[node name="Lives" type="Label" parent="HUD"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Lives"
+horizontal_alignment = 2
+
+[node name="Menus" type="CenterContainer" parent="."]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pause" type="VBoxContainer" parent="Menus"]
+layout_mode = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="Menus/Pause"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Quit" type="Button" parent="Menus/Pause"]
+layout_mode = 2
+text = "Quit"
+
+[node name="GameOver" type="VBoxContainer" parent="Menus"]
+visible = false
+layout_mode = 2
+
+[node name="GameOver" type="Label" parent="Menus/GameOver"]
+layout_mode = 2
+text = "Game Over!"
+
+[node name="Retry" type="Button" parent="Menus/GameOver"]
+layout_mode = 2
+text = "Try Again"
+
+[node name="Quit" type="Button" parent="Menus/GameOver"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="Menus/Pause/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Menus/Pause/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Menus/GameOver/Retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="Menus/GameOver/Quit" to="." method="_on_quit_pressed"]

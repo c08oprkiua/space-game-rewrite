@@ -1,10 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://r64nvcr8px2x"]
+[gd_scene load_steps=8 format=3 uid="uid://r64nvcr8px2x"]
 
-[ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://Resources/uitheming.tres" id="1_papj1"]
-[ext_resource type="Script" path="res://ReWritten/GUI/PlayingUI.gd" id="2_8vlbx"]
 [ext_resource type="PackedScene" uid="uid://brinaxqcvgqky" path="res://Scenes/spaceship.tscn" id="2_ahso2"]
 [ext_resource type="Script" path="res://ReWritten/PlayingField.gd" id="4_x2gke"]
-[ext_resource type="PackedScene" uid="uid://bqsdxfxshyb0q" path="res://Scenes/enemy.tscn" id="5_6i5s5"]
 [ext_resource type="Shape2D" uid="uid://dgfaq25711jc2" path="res://Resources/GameplayBounds/TopBounds.tres" id="5_v8rj8"]
 [ext_resource type="Shape2D" uid="uid://dfne6w3at8geu" path="res://Resources/GameplayBounds/BottomBounds.tres" id="6_vdll0"]
 [ext_resource type="Shape2D" uid="uid://btodifsilahp2" path="res://Resources/GameplayBounds/LeftBounds.tres" id="7_3uwbv"]
@@ -15,75 +12,10 @@ rough = true
 absorbent = true
 
 [node name="MainGameplay" type="Node2D"]
-process_mode = 1
-
-[node name="UI" type="Control" parent="."]
-top_level = true
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_papj1")
-script = ExtResource("2_8vlbx")
-
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 0
-
-[node name="Score" type="Label" parent="UI/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Score:"
-
-[node name="Level" type="Label" parent="UI/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-text = "Level"
-horizontal_alignment = 1
-
-[node name="Lives" type="Label" parent="UI/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-text = "Lives"
-horizontal_alignment = 2
-
-[node name="CenterContainer" type="CenterContainer" parent="UI"]
-process_mode = 2
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Resume" type="Button" parent="UI/CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "Resume"
-
-[node name="Quit" type="Button" parent="UI/CenterContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Quit"
+process_mode = 3
 
 [node name="Entities" type="Node2D" parent="."]
+process_mode = 1
 light_mask = 2
 visibility_layer = 2
 script = ExtResource("4_x2gke")
@@ -92,9 +24,6 @@ script = ExtResource("4_x2gke")
 light_mask = 2
 visibility_layer = 2
 position = Vector2(200, 100)
-
-[node name="GByte" parent="Entities" instance=ExtResource("5_6i5s5")]
-position = Vector2(337, 91)
 
 [node name="Boundaries" type="Node2D" parent="."]
 

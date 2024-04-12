@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqsdxfxshyb0q"]
+[gd_scene load_steps=6 format=3 uid="uid://bqsdxfxshyb0q"]
 
 [ext_resource type="Script" path="res://ReWritten/Objects/enemy.gd" id="1_si03x"]
+[ext_resource type="Texture2D" uid="uid://infctwouiky4" path="res://Assets/gbyte.png" id="2_kd574"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8urom"]
-radius = 8.0
+radius = 11.5
 
 [sub_resource type="Animation" id="Animation_0ghjg"]
 resource_name = "banned_from_existence"
@@ -26,12 +27,17 @@ _data = {
 }
 
 [node name="GByte" type="CharacterBody2D"]
+visibility_layer = 2
+rotation = 0.0541052
 script = ExtResource("1_si03x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visibility_layer = 2
 shape = SubResource("CircleShape2D_8urom")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visibility_layer = 2
+texture = ExtResource("2_kd574")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

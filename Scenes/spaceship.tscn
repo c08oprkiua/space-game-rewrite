@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://brinaxqcvgqky"]
+[gd_scene load_steps=5 format=3 uid="uid://brinaxqcvgqky"]
 
 [ext_resource type="Script" path="res://ReWritten/Objects/spaceship.gd" id="1_g77ps"]
 [ext_resource type="Resource" uid="uid://buy2ad1uj7opa" path="res://Resources/dev_profile.tres" id="2_ocmu5"]
 [ext_resource type="Shape2D" uid="uid://bpowfhstr37vq" path="res://Resources/spaceshiphitbox.tres" id="3_73tgk"]
+[ext_resource type="Texture2D" uid="uid://c0j6txanaovy5" path="res://Assets/ship_inverted.png" id="4_x6vmy"]
 
 [node name="Spaceship" type="CharacterBody2D"]
 process_mode = 1
+visibility_layer = 2
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_g77ps")
@@ -17,4 +19,6 @@ rotation = 1.5708
 shape = ExtResource("3_73tgk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visibility_layer = 2
 rotation = 1.5708
+texture = ExtResource("4_x6vmy")

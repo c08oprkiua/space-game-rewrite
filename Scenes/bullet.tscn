@@ -70,6 +70,7 @@ script = ExtResource("1_fq6xy")
 shape = SubResource("RectangleShape2D_hhwbc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visibility_layer = 4
 sprite_frames = SubResource("SpriteFrames_ghomd")
 animation = &"laseranim"
 frame_progress = 0.967078

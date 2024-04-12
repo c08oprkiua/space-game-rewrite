@@ -162,6 +162,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "MIT License"
 
+[connection signal="visibility_changed" from="." to="CenterContainer/MainMenu" method="_on_title_screen_visibility_changed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/SpaceGame" to="CenterContainer/MainMenu" method="_on_space_game_pressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/StartGame" to="CenterContainer/MainMenu" method="_on_start_game_pressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Options" to="CenterContainer/MainMenu" method="_on_options_pressed"]

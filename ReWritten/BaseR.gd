@@ -4,47 +4,69 @@ extends Control
 
 @onready var TitleScreen:Control = $"CenterContainer/SubViewportContainer/Gameview/TitleScreen"
 @onready var MainGameplay:Node2D = $"CenterContainer/SubViewportContainer/Gameview/MainGameplay"
+@onready var HUD:SpaceGameHUD = $"CenterContainer/SubViewportContainer/Gameview/UI"
 
 @onready var Wiiuscreen:TextureRect = $"WiiUGamepad/Gameview"
 @onready var Switchscreen:TextureRect = $"SwitchTablet/Gameview"
 @onready var FullScreen:TextureRect = $"FullScreen"
 
 func _ready() -> void:
+	setBorder()
+	Satellite.connect("state", changeState)
+	Satellite.emit_signal("state", SpaceGlobals.GameState.TITLE_SCREEN)
+
+#TODO: This uses the old settings design, need to update
+func setBorder() -> void:
 	config.load("user://settings.ini")
 	if config.has_section_key("Settings", "Frame"):
 		var screenchoice = config.get_value("Settings", "Frame")
 		if screenchoice == "Switch":
 			print(Switchscreen.get_size())
 		#gameview.get_texture()
-	Satellite.connect("state", Changestate)
 
+#TODO: This currently causes the title screen to be completely skipped, which is bad
 func _input(event: InputEvent) -> void:
-	print(event)
+	if event.is_action_pressed("pause"):
+		match SpaceGlobals.state:
+			SpaceGlobals.GameState.PAUSE_SCREEN:
+				Satellite.emit_signal("state", SpaceGlobals.GameState.GAMEPLAY)
+			SpaceGlobals.GameState.GAMEPLAY:
+				Satellite.emit_signal("state", SpaceGlobals.GameState.PAUSE_SCREEN)
+			SpaceGlobals.GameState.TITLE_SCREEN: #Debug thing
+				Satellite.emit_signal("state", SpaceGlobals.GameState.GAMEPLAY)
 
-func Changestate(state:int):
+#This function is the overarching controller of what is going on in Space Game
+#It's kinda messy rn, definitely want to clean it up at some point
+func changeState(state:SpaceGlobals.GameState) -> void:
+	SpaceGlobals.state = state
 	match state:
-		0: 
-			#Gameplay (this is a temp number until I can find the actual one)
+		SpaceGlobals.GameState.GAMEPLAY: #Gameplay
 			TitleScreen.hide()
+			HUD.menus.hide()
+			HUD.show()
 			MainGameplay.show()
-		1:
-			#Title screen
-			TitleScreen.show()
+			get_tree().paused = false
+		SpaceGlobals.GameState.TITLE_SCREEN:
+			#MainGameplay.process_mode = Node.PROCESS_MODE_DISABLED
+			get_tree().paused = true
+			HUD.hide()
 			MainGameplay.hide() #TODO: Pause the gameplay when this happens
-		2:
-			#Password screen
+			TitleScreen.show()
+		SpaceGlobals.GameState.PASSWORD_SCREEN:
 			pass
-		3:
-			#Pause screen
-			pass
-		4: 
-			#Game over screen
-			pass
-		-27:
-			#Password input
+		SpaceGlobals.GameState.PAUSE_SCREEN:
+			get_tree().paused = true
+			#MainGameplay.process_mode = Node.PROCESS_MODE_DISABLED
+			HUD.displayPauseScreen()
+			HUD.menus.show()
+		SpaceGlobals.GameState.GAME_OVER_SCREEN:
+			HUD.displayGameOver()
+			HUD.menus.show()
+		SpaceGlobals.GameState.PASSWORD_INPUT: 
 			pass
 
-const state = {
+const state:Dictionary = {
+	0: "main gameplay",
 	1: "title screen",
 	2: "password screen",
 	3: "pause screen",
@@ -62,18 +84,11 @@ const state = {
 # pong example, but also I believe neccesary since global variables don't seem to be able to be set(?)
 
 #var target = 
-var images:Images = Images.new()
 
 var orig_ship:Array = []
 var rotated_ship:Array = []
 var title:Array = []
 
-var enemy_palette = images.enemy_palette
-var title_palette = images.title_palette
-var compressed_ship = images.compressed_ship
-var compressed_ship2 = images.compressed_ship2
-var ship_palette = images.ship_palette
-var ship2_palette = images.ship2_palette
 #var compressed_boss = images.compressed_boss
 #var boss_palette = images.boss_palette
 #var compressed_boss2 = images.compressed_boss2
@@ -93,53 +108,6 @@ var trigmath
 var FPS_MULT:int = 40
 
 
-
-func _init(mySpaceGlobals: = SpaceGlobals):
-#	drawd = Draw.new()
-	trigmath = PRandom.new(mySpaceGlobals.seed)
-	mySpaceGlobals["invalid"]= 1
-	mySpaceGlobals["enemy"] = []
-	#spedUpMusic = load("res://Classic/speedcruise.mp3")
-	for x in range(36):
-		rotated_ship.append([])
-		for y in range(36):
-			rotated_ship[len(rotated_ship) - 1].append(0)
-	for x in range(36):
-		orig_ship.append([])
-		for y in range(36):
-			orig_ship[len(orig_ship) - 1].append(0)
-	for x in range(100):
-		title.append([])
-		for y in range(200):
-			title[len(title) - 1].append(0)
-	for x in range(23):
-		mySpaceGlobals.enemy.append([])
-		for y in range(23):
-			mySpaceGlobals.enemy[len(mySpaceGlobals.enemy) - 1].append(0)
-			
-	decompress_sprite(3061, 200, 100, images.compressed_title, title, 39);
-	decompress_sprite(511, 36, 36, images.compressed_ship, orig_ship, 14);
-	decompress_sprite(206, 23, 23, images.compressed_enemy, mySpaceGlobals.enemy, 9);
-	mySpaceGlobals["enemies"] = []
-	#for x in range(MAX_ENEMIES):
-	#	var pos = {
-	#		"x": 0,
-	#		"y": 0,
-	#		"m_x": 0,
-	#		"m_y": 0,
-	#		"active": 1
-	#	}
-	#	var enemy = {
-	#		"position": pos,
-	#		"angle": 0
-	#	}
-	#	var rotated_sprite = []
-	#	for y in range(23):
-	#		rotated_sprite.append([])
-	#		for z in range(23):
-	#			rotated_sprite[len(rotated_sprite) - 1].append(0)
-	#	enemy["rotated_sprite"] = rotated_sprite
-	#	mySpaceGlobals.enemies.append(enemy)
 
 func blackout(g):
 	g.labelController.makeAllInvisible()
@@ -167,12 +135,6 @@ func makeRotationMatrix(angle, width:int, original, target, transIndex):
 			
 			# TODO: crashes with this below line! When trying to assign to target, but only after doing the above math
 			target[ix][iy] = original[oldx][oldy];
-
-#func renderEnemies(mySpaceGlobals):
-#	# for all active enemies, advance them
-#	for x in range(MAX_ENEMIES): # up to 100 enemies at once
-#		if (mySpaceGlobals.enemies[x].position.active >= 1):
-#			drawd.drawBitmap(mySpaceGlobals.graphics, mySpaceGlobals.enemies[x].position.x, mySpaceGlobals.enemies[x].position.y, 23, 23, mySpaceGlobals.enemies[x].rotated_sprite, enemy_palette);
 
 func render(mySpaceGlobals):
 	if (mySpaceGlobals.invalid == 1):

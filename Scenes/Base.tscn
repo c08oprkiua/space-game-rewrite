@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs7oosh7bxp6w"]
+[gd_scene load_steps=11 format=3 uid="uid://cs7oosh7bxp6w"]
 
 [ext_resource type="Script" path="res://ReWritten/BaseR.gd" id="1_eiii8"]
 [ext_resource type="Texture2D" uid="uid://tqpf5dundxob" path="res://Assets/gamepad.png" id="1_r2e3h"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://nqbsalqglq0h" path="res://Assets/tablet.png" id="3_hhrrm"]
 [ext_resource type="PackedScene" uid="uid://r64nvcr8px2x" path="res://Scenes/MainGameplay.tscn" id="4_gunar"]
 [ext_resource type="PackedScene" uid="uid://wamq8rokwxtv" path="res://Scenes/Stars.tscn" id="5_87lrl"]
+[ext_resource type="PackedScene" uid="uid://tq7mcm5eoyr8" path="res://Scenes/HUD.tscn" id="5_isy12"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xy852"]
 viewport_path = NodePath("CenterContainer/SubViewportContainer/Gameview")
@@ -17,6 +18,7 @@ viewport_path = NodePath("CenterContainer/SubViewportContainer/Gameview")
 viewport_path = NodePath("CenterContainer/SubViewportContainer/Gameview")
 
 [node name="Control" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,11 +50,17 @@ size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="Stars" parent="CenterContainer/SubViewportContainer/Gameview" instance=ExtResource("5_87lrl")]
+process_mode = 3
 
 [node name="TitleScreen" parent="CenterContainer/SubViewportContainer/Gameview" instance=ExtResource("2_c6p06")]
+process_mode = 3
+visible = false
 top_level = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="UI" parent="CenterContainer/SubViewportContainer/Gameview" instance=ExtResource("5_isy12")]
+visible = false
 
 [node name="MainGameplay" parent="CenterContainer/SubViewportContainer/Gameview" instance=ExtResource("4_gunar")]
 visible = false
