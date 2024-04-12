@@ -34,7 +34,7 @@ func nevermind(_position, _rotation) -> void:
 
 func updatelives(count) -> void:
 	Lives.text = ("Lives: "+ count)
-	
+
 func updatescore(count) -> void:
 	Score.text = ("Score: "+ count)
 

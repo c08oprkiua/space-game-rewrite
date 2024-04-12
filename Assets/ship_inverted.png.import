@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cklplb8iwh248"
-path="res://godot/imported/gbat2.png-53995c904eaa82e9861f848f58dd946b.ctex"
+uid="uid://c0j6txanaovy5"
+path="res://godot/imported/ship_inverted.png-2e207c2904753a3655ef4f81c38b1979.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/gbat2.png"
-dest_files=["res://godot/imported/gbat2.png-53995c904eaa82e9861f848f58dd946b.ctex"]
+source_file="res://Assets/ship_inverted.png"
+dest_files=["res://godot/imported/ship_inverted.png-2e207c2904753a3655ef4f81c38b1979.ctex"]
 
 [params]
 

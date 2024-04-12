@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqsdxfxshyb0q"]
+[gd_scene load_steps=5 format=3 uid="uid://bqsdxfxshyb0q"]
 
-[ext_resource type="Texture2D" uid="uid://c7316ynubynwt" path="res://Assets/enemy1blue.png" id="1_3nfjl"]
 [ext_resource type="Script" path="res://ReWritten/Objects/enemy.gd" id="1_si03x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8urom"]
@@ -27,14 +26,12 @@ _data = {
 }
 
 [node name="GByte" type="CharacterBody2D"]
-scale = Vector2(1e-05, 1e-05)
 script = ExtResource("1_si03x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_8urom")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_3nfjl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

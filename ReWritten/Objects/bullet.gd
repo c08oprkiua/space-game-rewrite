@@ -6,7 +6,8 @@ class_name Bullet
 
 ## The pool of bullets used in Space Game
 static var pool:Array[Bullet] = []
-const scene:PackedScene = preload("res://Scenes/bullet.tscn")
+#If this is a preloaded const, it causes a corruption error. 
+static var scene:PackedScene = load("res://Scenes/bullet.tscn")
 
 static func _static_init() -> void:
 	initBulletPool()
@@ -24,7 +25,6 @@ func _ready() -> void:
 	hide()
 
 func _process(delta: float) -> void:
-	#newMoveBullet(delta)
 	moveBullet(delta)
 
 ## Applies movement to a bullet

@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://r64nvcr8px2x"]
+[gd_scene load_steps=11 format=3 uid="uid://r64nvcr8px2x"]
 
 [ext_resource type="Theme" uid="uid://b7kh7cuwrfj18" path="res://Resources/uitheming.tres" id="1_papj1"]
 [ext_resource type="Script" path="res://ReWritten/GUI/PlayingUI.gd" id="2_8vlbx"]
 [ext_resource type="PackedScene" uid="uid://brinaxqcvgqky" path="res://Scenes/spaceship.tscn" id="2_ahso2"]
 [ext_resource type="Script" path="res://ReWritten/PlayingField.gd" id="4_x2gke"]
+[ext_resource type="PackedScene" uid="uid://bqsdxfxshyb0q" path="res://Scenes/enemy.tscn" id="5_6i5s5"]
 [ext_resource type="Shape2D" uid="uid://dgfaq25711jc2" path="res://Resources/GameplayBounds/TopBounds.tres" id="5_v8rj8"]
 [ext_resource type="Shape2D" uid="uid://dfne6w3at8geu" path="res://Resources/GameplayBounds/BottomBounds.tres" id="6_vdll0"]
 [ext_resource type="Shape2D" uid="uid://btodifsilahp2" path="res://Resources/GameplayBounds/LeftBounds.tres" id="7_3uwbv"]
@@ -91,6 +92,9 @@ script = ExtResource("4_x2gke")
 light_mask = 2
 visibility_layer = 2
 position = Vector2(200, 100)
+
+[node name="GByte" parent="Entities" instance=ExtResource("5_6i5s5")]
+position = Vector2(337, 91)
 
 [node name="Boundaries" type="Node2D" parent="."]
 

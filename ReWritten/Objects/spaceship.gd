@@ -1,18 +1,20 @@
 extends CharacterBody2D
 
+#	- Joystick input (p1Move)
+#	- Bullet firing (p1Shoot)
+#	- Player look direction (p1look)
+
+static var sprite:ImageTexture
+static var sprite2:ImageTexture
+
+static func _static_init() -> void:
+	sprite = ImageTexture.create_from_image(SpaceGlobals.decompressSpriteToImage(Vector2i(36,36), Images.compressed_ship, Images.ship_palette))
+	sprite2 = ImageTexture.create_from_image(SpaceGlobals.decompressSpriteToImage(Vector2i(36,36), Images.compressed_ship2, Images.ship2_palette))
+
+
 @export var settings: PlayerSettings
 
-#var buttonA = Input.is_action_pressed("accept")
-#var buttonB = Input.is_action_pressed("cancel")
-#var buttonUP    = Input.is_action_pressed("up")
-#var buttonDOWN  = Input.is_action_pressed("down")
-#var buttonRIGHT = Input.is_action_pressed("right")
-#var buttonLEFT  = Input.is_action_pressed("left")
-#var buttonPLUS = Input.is_action_pressed("pause")
-
-#These values now also are interchangable with the d-pad inputs.
-#However, the d-pad will still return binary values, so true 8 direction
-#"d-pad movement" is still possible because of how these are used
+@onready var spr_texture:Sprite2D = $"Sprite2D"
 
 var look_vector:Vector2 #Aim/look vector, replaces rstick_x and rstick_y
 var move_vector:Vector2 #Movement vector, replaces lstick_x and lstick_y
@@ -20,12 +22,16 @@ var move_vector:Vector2 #Movement vector, replaces lstick_x and lstick_y
 var shootspeed: float #Future plans: Use this as an analog fire rate thing
 var mouse_aim:bool # shootspeed = 1
 
-#	- Joystick input (p1Move)
-#	- Bullet firing (p1Shoot)
-#	- Player look direction (p1look)
-
 func _ready() -> void:
 	set_scale(SpaceGlobals.SCALER)
+	match settings.ShipType:
+		0:
+			spr_texture.texture = sprite
+		1:
+			var img:ImageTexture = ImageTexture.create_from_image(SpaceGlobals.decompressSpriteToImage(Vector2i(36, 36), Images.compressed_ship, Images.swapRedBlue(Images.ship_palette)))
+			spr_texture.texture = img
+		2:
+			spr_texture.texture = sprite
 
 func _process(delta:float) -> void:
 	move_vector = Vector2()
@@ -41,7 +47,6 @@ func _process(delta:float) -> void:
 	p1Move(delta)
 	p1look()
 	p1Shoot()
-	#oldShoot()
 
 func p1Shoot() -> void:
 	if (SpaceGlobals.playerExplodeFrame > 1):

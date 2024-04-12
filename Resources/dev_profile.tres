@@ -4,17 +4,17 @@
 
 [resource]
 script = ExtResource("1_ce3f1")
-ProfileName = "ReadyPlayerOne"
-HighScore = 0
-SFX_Volume = 100
-MusicVolume = 100
+profileName = ""
+highScore = 0
+sfxVolume = 100
+musicVolume = 100
 tripleShot = false
 doubleShot = false
-CanEditSpeed = false
+canEditSpeed = false
 lives = 4
 speed = 400
 NoEnemies = false
 Kamikaze = false
-ShipType = 0
+ShipType = 1
 RedBlueSwap = false
 bordertype = 0

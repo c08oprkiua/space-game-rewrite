@@ -1,7 +1,0 @@
-[gd_resource type="StyleBoxFlat" format=3 uid="uid://r1wrh1qmwea4"]
-
-[resource]
-draw_center = false
-border_width_left = 10
-border_width_right = 10
-corner_detail = 1

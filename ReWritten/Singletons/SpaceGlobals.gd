@@ -197,24 +197,22 @@ func increaseScore(inc:int) -> void:
 	if (fiveThousandsAfter > fiveThousandsBefore):
 		level += 1
 
-
-
-func decompressSpriteToImage(size:Vector2i, input:Array, transIndex:int, palette:Array[Color]) -> Array:
+## This function takes a compressed sprite, its size, and the palette to use for it, and returns a full Image for it.
+func decompressSpriteToImage(size:Vector2i, input:Array, palette:Array[Color]) -> Image:
 	var target:Array[PackedByteArray] = []
 	var out_img:Image = Image.create(size.x, size.y, false, Image.FORMAT_RGBA8)
-	var cx:int = 0
-	var cy:int = 0
 	var posinrow:int = 0;
 	# go through input array
 	var x:int = 0
+	var c:Vector2i = Vector2i(0, 0)
 	while x < input.size():
-		var count = input[x];
-		var value = input[x+1];
+		var count:int = input[x]
+		var value:int = input[x + 1]
 		if (count == -120): # full value rows of last index in palette
 			for z in range(value):
 				for za in range(size.x):
-					target[cy+z][cx+za] = transIndex;
-			cy += value;
+					out_img.set_pixel(c.x + za, c.y + z, palette[palette.size() - 1])
+			c.y += value;
 			x += 2
 			continue;
 		if (count <= 0): # if it's negative, -count is value, and value is meaningless and advance by one
@@ -222,15 +220,17 @@ func decompressSpriteToImage(size:Vector2i, input:Array, transIndex:int, palette
 			count = 1;
 			x -= 1; # subtract one, so next time it goes up by 2, putting us at x+1
 		for z in range(count):
-			target[cy][cx] = value;
-			cx += 1;
+			out_img.set_pixelv(c, palette[value])
+			c.x += 1;
 		posinrow += count
 		if (posinrow >= size.x):
 			posinrow = 0;
-			cx = 0;
-			cy+= 1;
+			c.x = 0;
+			c.y += 1;
 		x += 2
-	return target
+	
+	#out_img.save_png("res://{0}.png".format({"0": input.size()})) #For debugging purposes
+	return out_img
 
 #	graphics["classicMain"] = self
 #	graphics["nxFont"] = false
